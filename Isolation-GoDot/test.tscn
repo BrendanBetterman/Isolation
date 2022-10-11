@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://HelloWorld.gdns" type="Script" id=1]
+[ext_resource path="res://cube1.obj" type="ArrayMesh" id=2]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="cube1" type="MeshInstance" parent="."]
+pause_mode = 2
+physics_interpolation_mode = 2
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3818, -21.9465, -35.4782 )
+mesh = ExtResource( 2 )
+script = ExtResource( 1 )
