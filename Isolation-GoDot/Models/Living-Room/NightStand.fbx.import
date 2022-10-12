@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Toaster.fbx-8cfd865e97bfb9fc3c32192eab63db8a.scn"
+path="res://.import/NightStand.fbx-979dc2f7bd46f002e45508e6c0900f77.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/Toaster.fbx"
-dest_files=[ "res://.import/Toaster.fbx-8cfd865e97bfb9fc3c32192eab63db8a.scn" ]
+source_file="res://Models/Living-Room/NightStand.fbx"
+dest_files=[ "res://.import/NightStand.fbx-979dc2f7bd46f002e45508e6c0900f77.scn" ]
 
 [params]
 

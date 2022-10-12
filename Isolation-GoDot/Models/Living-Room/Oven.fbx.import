@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Night-Stand.fbx-a364029a53e034110593aec339b2e9aa.scn"
+path="res://.import/Oven.fbx-83a61619ca7d04a28a86580a2a04dd48.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/Night-Stand.fbx"
-dest_files=[ "res://.import/Night-Stand.fbx-a364029a53e034110593aec339b2e9aa.scn" ]
+source_file="res://Models/Living-Room/Oven.fbx"
+dest_files=[ "res://.import/Oven.fbx-83a61619ca7d04a28a86580a2a04dd48.scn" ]
 
 [params]
 

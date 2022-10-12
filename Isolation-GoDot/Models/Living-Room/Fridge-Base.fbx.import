@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Oven-Base.fbx-ffdacb56afd45a2da69d328062e1a118.scn"
+path="res://.import/Fridge-Base.fbx-853abb6ab084607e5f7129db83ade0ee.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/Oven-Base.fbx"
-dest_files=[ "res://.import/Oven-Base.fbx-ffdacb56afd45a2da69d328062e1a118.scn" ]
+source_file="res://Models/Living-Room/Fridge-Base.fbx"
+dest_files=[ "res://.import/Fridge-Base.fbx-853abb6ab084607e5f7129db83ade0ee.scn" ]
 
 [params]
 
