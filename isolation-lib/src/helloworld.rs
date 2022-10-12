@@ -1,4 +1,6 @@
-use gdnative::prelude::*;
+use core::panicking::panic;
+
+use gdnative::{prelude::*, api::viewport};
 /// The HelloWorld "class"
 #[derive(NativeClass)]
 #[inherit(Node)]
@@ -21,7 +23,13 @@ impl HelloWorld {
         godot_print!("Hello world from node {}!", base.to_string());
     }
     #[method]
-    fn _process(&mut self, #[base] _base: &Node, _delta: f32) {
+    fn _process(&mut self, #[base] base: &Node, _delta: f32) {
+        let tmp = match base.get_viewport().clone(){
+            None=> panic!("break"),
+            Some(x) => godot_print!("{}",x.get),
+        };
+        
+        
         let input = Input::godot_singleton();
         if Input::is_action_pressed(input, "ui_up", false) {
            godot_print!("key pressed");
