@@ -25,7 +25,7 @@ background_energy = 0.0
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.0
 adjustment_enabled = true
-adjustment_brightness = 0.77
+adjustment_brightness = 1.3
 
 [node name="Spatial" type="Spatial"]
 
@@ -54,10 +54,6 @@ transform = Transform( 0.500302, 0.865851, 0, -0.865851, 0.500302, 0, 0, 0, 1, 0
 [node name="NightStand" parent="." instance=ExtResource( 11 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.31513, 0, 4.45642 )
 
-[node name="Bed" parent="." instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.31558, 0, 3.61564 )
-script = ExtResource( 17 )
-
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 0.273953, -0.215814, 0.937216, -0.0362849, 0.971484, 0.234311, -0.961058, -0.0981971, 0.258311, 8.52464, 2.14726, 2.73312 )
 light_color = Color( 0.490196, 0.796078, 0.827451, 1 )
@@ -70,14 +66,10 @@ spot_angle = 60.36
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
-[node name="ClippedCamera" type="ClippedCamera" parent="."]
-transform = Transform( -4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, 2.90628, 1.48, 3.6442 )
-fov = 60.5
-
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.299888, 0.611838, -0.418589 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05572, 2.40094, -0.278192 )
 light_color = Color( 0.894118, 0.580392, 0.305882, 1 )
-light_energy = 0.576
+light_energy = 7.622
 shadow_enabled = true
 
 [node name="OmniLight2" type="OmniLight" parent="."]
@@ -109,3 +101,14 @@ transform = Transform( 0.136563, 0, -0.990631, 0, 1, 0, 0.990631, 0, 0.136563, 6
 
 [node name="Lamp" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24722, 0.533697, 4.35169 )
+
+[node name="Bed" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.30594, 0, 3.72912 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.906, 1.48, 3.644 )
+script = ExtResource( 17 )
+
+[node name="ClippedCamera" type="ClippedCamera" parent="MeshInstance"]
+transform = Transform( -4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, 0.000280142, 0, 0.000200033 )
+fov = 60.5
