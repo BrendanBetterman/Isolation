@@ -1,19 +1,19 @@
 use gdnative::prelude::*;
-/// The HelloWorld "class"
+/// The Player "class"
 #[derive(NativeClass)]
 #[inherit(Node)]
-pub struct HelloWorld;
-impl HelloWorld {
+pub struct Player;
+impl Player {
     /// The "constructor" of the class.
     fn new(_base: &Node) -> Self {
-        HelloWorld
+        Player
     }
 }
 
 // Only __one__ `impl` block can have the `#[methods]` attribute, which
 // will generate code to automatically bind any exported methods to Godot.
 #[methods]
-impl HelloWorld {
+impl Player {
     #[method]
     fn _ready(&self, #[base] base: &Node) {
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
