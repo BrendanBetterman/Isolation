@@ -1,6 +1,6 @@
-use core::panicking::panic;
 
-use gdnative::{prelude::*, api::viewport};
+
+use gdnative::{prelude::*};
 /// The HelloWorld "class"
 #[derive(NativeClass)]
 #[inherit(Node)]
@@ -17,18 +17,22 @@ impl HelloWorld {
 #[methods]
 impl HelloWorld {
     #[method]
-    fn _ready(&self, #[base] base: &Node) {
+    fn _ready(&self, #[base] _base: &Node) {
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
         // output tab as well.
-        godot_print!("Hello world from node {}!", base.to_string());
+        //godot_print!("Hello world from node {}!", base.to_string());
     }
     #[method]
-    fn _process(&mut self, #[base] base: &Node, _delta: f32) {
-        let tmp = match base.get_viewport().clone(){
-            None=> panic!("break"),
-            Some(x) => godot_print!("{}",x.get),
-        };
-        
+    fn _process(&mut self, #[base] _base: &Node, _delta: f32) {
+        /* 
+        unsafe{
+            let view = match base.get_viewport(){
+                Some(x) =>x.clone(),
+                None => panic!("Couldn't get viewport"),
+            };  
+            godot_print!("{}",view.assume_unique().get_mouse_position().x);
+        }
+        */
         
         let input = Input::godot_singleton();
         if Input::is_action_pressed(input, "ui_up", false) {
