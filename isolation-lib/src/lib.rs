@@ -1,11 +1,12 @@
 use gdnative::prelude::*;
-use gdnative::api::MeshInstance;
 mod helloworld;
 mod player;
+mod camera;
 // Function that registers all exposed classes to Godot
 fn init(handle: InitHandle) {
     handle.add_class::<helloworld::HelloWorld>();
     handle.add_class::<player::Player>();
+    handle.add_class::<camera::P_Camera>();
 }
 // Macro that creates the entry-points of the dynamic library.
 godot_init!(init);
