@@ -1,9 +1,9 @@
 use gdnative::prelude::*;
-use gdnative::api::{MeshInstance, InputEventMouse, InputEventMouseMotion};
+use gdnative::api::{MeshInstance, InputEventMouse, InputEventMouseMotion, Area};
 use gdnative::export::hint::{EnumHint, IntHint, StringHint};
 /// The Player "class"
 #[derive(gdnative::derive::NativeClass)]
-#[inherit(MeshInstance)]
+#[inherit(KinematicBody)]
 #[register_with(register_members)]
 pub struct Player{
     sensitivity: f32,
@@ -36,7 +36,7 @@ fn register_members(builder: &ClassBuilder<Player>) {
 }
 impl Player {
     /// The "constructor" of the class.
-    fn new( _owner: &MeshInstance) -> Self {
+    fn new( _owner: &KinematicBody) -> Self {
         Player{
             sensitivity: -12.5,
             position: Vector3::new(0.0,0.0,0.0),
@@ -54,7 +54,7 @@ fn lerp(start:f32,end:f32,time:f32)->f32{
 #[methods]
 impl Player {
     #[method]
-    fn _ready(&mut self, #[base]owner: &MeshInstance) {
+    fn _ready(&mut self, #[base]owner: &KinematicBody) {
         owner.set_physics_process(true);
         self.position = owner.translation();
         self.rotation = owner.rotation();
@@ -63,7 +63,15 @@ impl Player {
         //godot_print!("Hello world from node {}!", base.to_string());
     }
     #[method]
-    fn _physics_process(&mut self,#[base]owner: &MeshInstance, delta: f64) {
+    fn _on_bed_entered(&self,#[base]owner: &KinematicBody, body: Ref<KinematicBody>){
+        unsafe{
+            godot_print!("collided with {}", body.clone().assume_unique().name());
+        }
+    }
+    #[method]
+    fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
+        //mouse movement system- unsafe due to undetermined viewport
+        
         unsafe{
             let view = match owner.get_viewport(){
                 Some(x) =>x.clone(),
@@ -83,7 +91,7 @@ impl Player {
         }
         let input = Input::godot_singleton();
         //godot_print!("{}", input.get_last_mouse_speed().x);
-        let mouse = InputEventMouseMotion::new();
+       
         //godot_print!("{}",mouse.global_position().x);
         //owner.rotate_y(input.get_last_mouse_speed().x as f64 * delta);
         //owner.set_rotation(Vector3::new(m.0 as f32,0.0,0.0));
@@ -113,6 +121,7 @@ impl Player {
             self.position.y = lerp(self.position.y, 1.48,0.09);
         }
         owner.set_translation(self.position);
+        
         /*
         if Input::is_action_pressed(input, "ui_e", false) {
             owner.rotate_y(-0.5 * delta);

@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/Toaster.fbx-807335ddc1128d54149456c0c29dcbc6.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Kitchen/Toaster.fbx"
+dest_files=[ "res://.import/Toaster.fbx-807335ddc1128d54149456c0c29dcbc6.scn" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/RightDoor.fbx-da073f797fd731ff0a292df32796cdca.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Kitchen/RightDoor.fbx"
+dest_files=[ "res://.import/RightDoor.fbx-da073f797fd731ff0a292df32796cdca.scn" ]
 
 [params]
 

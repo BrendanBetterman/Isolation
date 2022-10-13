@@ -16,6 +16,7 @@ impl HelloWorld {
 // will generate code to automatically bind any exported methods to Godot.
 #[methods]
 impl HelloWorld {
+    
     #[method]
     fn _ready(&self, #[base] _base: &Node) {
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
@@ -36,7 +37,7 @@ impl HelloWorld {
         
         let input = Input::godot_singleton();
         if Input::is_action_pressed(input, "ui_up", false) {
-           godot_print!("key pressed");
+          // godot_print!("key pressed");
         }
         //godot_print!("Hello world from node {}!", base.to_string());
     }

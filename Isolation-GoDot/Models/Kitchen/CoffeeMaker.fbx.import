@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/CoffeeMaker.fbx-177515f147f40d4ae9d1fd894ba0f83d.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Kitchen/CoffeeMaker.fbx"
+dest_files=[ "res://.import/CoffeeMaker.fbx-177515f147f40d4ae9d1fd894ba0f83d.scn" ]
 
 [params]
 
