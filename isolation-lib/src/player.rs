@@ -1,3 +1,5 @@
+use std::clone;
+
 use gdnative::prelude::*;
 use gdnative::api::{MeshInstance, InputEventMouse, InputEventMouseMotion, Area};
 use gdnative::export::hint::{EnumHint, IntHint, StringHint};
@@ -58,6 +60,18 @@ impl Player {
         owner.set_physics_process(true);
         self.position = owner.translation();
         self.rotation = owner.rotation();
+        
+        unsafe{
+            
+            match owner.get_child(0){
+                Some(x)=>match x.clone().assume_unique().get_child(0){
+                    //get the camera parent
+                    Some(y)=>godot_print!("{}",y.clone().assume_unique().name()),
+                    None=>godot_print!("Failed"),
+                },
+                None=>godot_print!("failed"),
+            };
+        }
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
         // output tab as well.s
         //godot_print!("Hello world from node {}!", base.to_string());
@@ -68,6 +82,7 @@ impl Player {
             godot_print!("collided with {}", body.clone().assume_unique().name());
         }
     }
+    
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
         //mouse movement system- unsafe due to undetermined viewport
@@ -112,8 +127,7 @@ impl Player {
         }
         if Input::is_action_pressed(input, "ui_right", false) {
             self.position.z += (self.rotation.y + 1.57).sin()*self.move_speed*delta as f32;
-            self.position.x += (self.rotation.y + 4.71).cos()*self.move_speed*delta as f32;
-            
+            self.position.x += (self.rotation.y + 4.71).cos()*self.move_speed*delta as f32;   
         }
         if Input::is_action_pressed(input, "ui_q", false) {
             self.position.y = lerp(self.position.y, 0.90,0.09);

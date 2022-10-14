@@ -45,7 +45,7 @@ impl P_Camera {
     #[method]
     fn _physics_process(&mut self, #[base] base: &ClippedCamera, _delta: f32) {
         
-        godot_print!("x{},y{},z{}",base.project_ray_origin(Vector2::new(512.0,300.0)).x,base.project_ray_origin(Vector2::new(512.0,300.0)).y,base.project_ray_origin(Vector2::new(512.0,300.0)).z);
+       // godot_print!("x{},y{},z{}",base.project_ray_origin(Vector2::new(512.0,300.0)).x,base.project_ray_origin(Vector2::new(512.0,300.0)).y,base.project_ray_origin(Vector2::new(512.0,300.0)).z);
         //godot_print!("Hello world from node {}!", base.to_string());
     }
 
