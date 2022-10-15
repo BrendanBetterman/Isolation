@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV.fbx-b7d4b510cd4cd02cf6734aa6cb4e9052.scn"
+path="res://.import/Tv.fbx-f0696303b868b66ff9d7f1a4d6e3abaa.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV.fbx"
-dest_files=[ "res://.import/TV.fbx-b7d4b510cd4cd02cf6734aa6cb4e9052.scn" ]
+source_file="res://Models/Living-Room/Tv.fbx"
+dest_files=[ "res://.import/Tv.fbx-f0696303b868b66ff9d7f1a4d6e3abaa.scn" ]
 
 [params]
 

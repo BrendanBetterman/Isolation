@@ -1,7 +1,5 @@
-use std::clone;
-
+use gdnative::api::MeshInstance;
 use gdnative::prelude::*;
-use gdnative::api::{MeshInstance, InputEventMouse, InputEventMouseMotion, Area};
 use gdnative::export::hint::{EnumHint, IntHint, StringHint};
 /// The Player "class"
 #[derive(gdnative::derive::NativeClass)]
@@ -11,8 +9,10 @@ pub struct Player{
     sensitivity: f32,
     position: Vector3,
     rotation: Vector3,
+    velocity: Vector3,
     move_speed: f32,
     crouched: bool,
+    
 }
 fn register_members(builder: &ClassBuilder<Player>) {
     builder
@@ -43,13 +43,25 @@ impl Player {
             sensitivity: -12.5,
             position: Vector3::new(0.0,0.0,0.0),
             rotation: Vector3::new(0.0,0.0,0.0),
-            move_speed: 1.0,
+            velocity: Vector3::new(0.0,0.0,0.0),
+            move_speed: 2.0,
             crouched: false,
         }
     }
 }
 fn lerp(start:f32,end:f32,time:f32)->f32{
-    return start+(end-start)*time;
+    let mut out = start+(end-start)*time; 
+    //so end can be achieved
+    if end > start{
+        if out > end - 0.01{
+            out = end;
+        }
+    }else{
+        if out < end + 0.01{
+            out = end;
+        }
+    }
+    return out;
 }
 // Only __one__ `impl` block can have the `#[methods]` attribute, which
 // will generate code to automatically bind any exported methods to Godot.
@@ -61,7 +73,7 @@ impl Player {
         self.position = owner.translation();
         self.rotation = owner.rotation();
         
-        unsafe{
+        /*unsafe{
             
             match owner.get_child(0){
                 Some(x)=>match x.clone().assume_unique().get_child(0){
@@ -71,18 +83,29 @@ impl Player {
                 },
                 None=>godot_print!("failed"),
             };
-        }
+        }*/
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
         // output tab as well.s
         //godot_print!("Hello world from node {}!", base.to_string());
     }
     #[method]
-    fn _on_bed_entered(&self,#[base]owner: &KinematicBody, body: Ref<KinematicBody>){
+    fn _on_collision(&mut self,#[base]owner: &KinematicBody, body: Ref<Node>){
+        self.position.x -= self.velocity.x*2.0* if self.crouched {self.move_speed/2.0}else{self.move_speed};
+        self.position.z -= self.velocity.z*2.0* if self.crouched {self.move_speed/2.0}else{self.move_speed};
+        
+        owner.set_translation(self.position);
+        self.velocity = Vector3::new(0.0,0.0,0.0);
         unsafe{
-            godot_print!("collided with {}", body.clone().assume_unique().name());
+            godot_print!("hovered with {}", body.clone().assume_unique().name());
         }
     }
-    
+    #[method]
+    fn _on_mouse_hover(&self,#[base]_owner: &KinematicBody){
+        //godot_print!("hit");
+        //unsafe{
+            //godot_print!("hovered with {}", body.clone().assume_unique().name());
+        //}
+    }
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
         //mouse movement system- unsafe due to undetermined viewport
@@ -110,32 +133,39 @@ impl Player {
         //godot_print!("{}",mouse.global_position().x);
         //owner.rotate_y(input.get_last_mouse_speed().x as f64 * delta);
         //owner.set_rotation(Vector3::new(m.0 as f32,0.0,0.0));
+        
+        let mut new_velocity = Vector3::new(0.0,0.0,0.0);
         if Input::is_action_pressed(input, "ui_up", false) {
-            self.position.z -= self.rotation.y.sin()*self.move_speed * delta as f32;
-            self.position.x -= (self.rotation.y + 3.14).cos()*self.move_speed*delta as f32;
-           
-        }
-        if Input::is_action_pressed(input, "ui_down", false) {
-            self.position.z += self.rotation.y.sin()*self.move_speed*delta as f32;
-            self.position.x += (self.rotation.y + 3.14).cos()*self.move_speed*delta as f32;
-            
+            new_velocity.z -= self.rotation.y.sin();
+            new_velocity.x -= (self.rotation.y + 3.141592).cos();
+        }else if Input::is_action_pressed(input, "ui_down", false) {
+            new_velocity.z += self.rotation.y.sin();
+            new_velocity.x += (self.rotation.y + 3.141592).cos();
         }
         if Input::is_action_pressed(input, "ui_left", false) {
-            self.position.z -= (self.rotation.y + 1.57).sin()*self.move_speed*delta as f32;
-            self.position.x -= (self.rotation.y + 4.71).cos()*self.move_speed*delta as f32;
+            new_velocity.z -= (self.rotation.y+1.570796).sin();
+            new_velocity.x -= (self.rotation.y + 4.712388).cos();
             
+        }else if Input::is_action_pressed(input, "ui_right", false) {
+            new_velocity.z += (self.rotation.y+1.570796).sin();
+            new_velocity.x += (self.rotation.y + 4.712388).cos();
         }
-        if Input::is_action_pressed(input, "ui_right", false) {
-            self.position.z += (self.rotation.y + 1.57).sin()*self.move_speed*delta as f32;
-            self.position.x += (self.rotation.y + 4.71).cos()*self.move_speed*delta as f32;   
-        }
+        self.velocity.x = lerp(self.velocity.x,new_velocity.x* if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
+        self.velocity.z = lerp(self.velocity.z,new_velocity.z*if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
+        
+        //self.position.x += self.velocity.x;
+        //self.position.z += self.velocity.z;
+        
+        owner.move_and_collide(self.velocity, false, true, false);
+        self.position = owner.translation();
         if Input::is_action_pressed(input, "ui_q", false) {
             self.position.y = lerp(self.position.y, 0.90,0.09);
+            self.crouched = true;
         }else{
             self.position.y = lerp(self.position.y, 1.48,0.09);
+            self.crouched = false;
         }
         owner.set_translation(self.position);
-        
         /*
         if Input::is_action_pressed(input, "ui_e", false) {
             owner.rotate_y(-0.5 * delta);
