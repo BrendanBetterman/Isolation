@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/FireAlarm.fbx-97789220d15de62878e56ae153c7c1f6.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Small/FireAlarm.fbx"
+dest_files=[ "res://.import/FireAlarm.fbx-97789220d15de62878e56ae153c7c1f6.scn" ]
 
 [params]
 

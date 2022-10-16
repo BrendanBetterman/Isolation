@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Doze On The Bullet Train.mp3-cb0af2a4ab65a1ce5960dece65c172be.mp3str"
+
+[deps]
+
+source_file="res://Music/Doze On The Bullet Train.mp3"
+dest_files=[ "res://.import/Doze On The Bullet Train.mp3-cb0af2a4ab65a1ce5960dece65c172be.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

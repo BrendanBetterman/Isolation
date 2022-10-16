@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/FireExt.fbx-9731ffdf1f5596e9bb06b49947ea5b34.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Small/FireExt.fbx"
+dest_files=[ "res://.import/FireExt.fbx-9731ffdf1f5596e9bb06b49947ea5b34.scn" ]
 
 [params]
 

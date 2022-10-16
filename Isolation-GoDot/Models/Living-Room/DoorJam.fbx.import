@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn"
+path="res://.import/DoorJam.fbx-5cb1d68c5f4732fa0ebe910933510b65.scn"
 
 [deps]
 
-source_file="res://Models/Living-Room/TV-Stand.fbx"
-dest_files=[ "res://.import/TV-Stand.fbx-f081d7215f7193ef8fcef13a7a84bb7e.scn" ]
+source_file="res://Models/Living-Room/DoorJam.fbx"
+dest_files=[ "res://.import/DoorJam.fbx-5cb1d68c5f4732fa0ebe910933510b65.scn" ]
 
 [params]
 
