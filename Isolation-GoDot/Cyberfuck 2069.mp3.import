@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Cyberfuck 2069.mp3-2a1e4dc45560d2745d974496e76301de.mp3str"
+
+[deps]
+
+source_file="res://Cyberfuck 2069.mp3"
+dest_files=[ "res://.import/Cyberfuck 2069.mp3-2a1e4dc45560d2745d974496e76301de.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

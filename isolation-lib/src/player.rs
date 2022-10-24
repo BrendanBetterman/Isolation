@@ -1,4 +1,3 @@
-use gdnative::api::MeshInstance;
 use gdnative::prelude::*;
 use gdnative::export::hint::{EnumHint, IntHint, StringHint};
 /// The Player "class"
@@ -12,7 +11,7 @@ pub struct Player{
     velocity: Vector3,
     move_speed: f32,
     crouched: bool,
-    
+    key: [bool;4],
 }
 fn register_members(builder: &ClassBuilder<Player>) {
     builder
@@ -46,6 +45,7 @@ impl Player {
             velocity: Vector3::new(0.0,0.0,0.0),
             move_speed: 2.0,
             crouched: false,
+            key: [false;4],
         }
     }
 }
@@ -72,40 +72,33 @@ impl Player {
         owner.set_physics_process(true);
         self.position = owner.translation();
         self.rotation = owner.rotation();
-        
-        /*unsafe{
-            
-            match owner.get_child(0){
-                Some(x)=>match x.clone().assume_unique().get_child(0){
-                    //get the camera parent
-                    Some(y)=>godot_print!("{}",y.clone().assume_unique().name()),
-                    None=>godot_print!("Failed"),
-                },
-                None=>godot_print!("failed"),
-            };
-        }*/
-        // The `godot_print!` macro works like `println!` but prints to the Godot-editor
-        // output tab as well.s
-        //godot_print!("Hello world from node {}!", base.to_string());
+        let node = Node::get_path(owner);
+        godot_print!("{:?}",node);
+    }
+   
+    #[method]
+    fn _can_use(&self,#[base]_owner: &KinematicBody)->bool{
+        return self.key[0] || self.key[1];
+    }
+    //Hover Functions
+    #[method]
+    fn _on_key_hover(&mut self,#[base]_owner: &KinematicBody){
+        self.key[0] = true;
     }
     #[method]
-    fn _on_collision(&mut self,#[base]owner: &KinematicBody, body: Ref<Node>){
-        self.position.x -= self.velocity.x*2.0* if self.crouched {self.move_speed/2.0}else{self.move_speed};
-        self.position.z -= self.velocity.z*2.0* if self.crouched {self.move_speed/2.0}else{self.move_speed};
-        
-        owner.set_translation(self.position);
-        self.velocity = Vector3::new(0.0,0.0,0.0);
-        unsafe{
-            godot_print!("hovered with {}", body.clone().assume_unique().name());
-        }
+    fn _exit_key_hover(&mut self,#[base]_owner: &KinematicBody){
+        self.key[0] = false;
     }
     #[method]
-    fn _on_mouse_hover(&self,#[base]_owner: &KinematicBody){
-        //godot_print!("hit");
-        //unsafe{
-            //godot_print!("hovered with {}", body.clone().assume_unique().name());
-        //}
+    fn _on_car_hover(&mut self,#[base]_owner: &KinematicBody){
+        self.key[1] = true;
     }
+    #[method]
+    fn _exit_car_hover(&mut self,#[base]_owner: &KinematicBody){
+        self.key[1] = false;
+    }
+    
+    //End Of Hover Functions
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
         //mouse movement system- unsafe due to undetermined viewport
@@ -128,6 +121,8 @@ impl Player {
             //godot_print!("{}",mouse_y);
         }
         let input = Input::godot_singleton();
+        //input.set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
+        
         //godot_print!("{}", input.get_last_mouse_speed().x);
        
         //godot_print!("{}",mouse.global_position().x);
@@ -165,7 +160,14 @@ impl Player {
             self.position.y = lerp(self.position.y, 1.48,0.09);
             self.crouched = false;
         }
+        if Input::is_action_pressed(input, "ui_use", false){
+            if self.key[0]{
+                godot_print!("teleport to parking lot");
+                self.position.x = -24.0;
+            }
+        }
         owner.set_translation(self.position);
+
         /*
         if Input::is_action_pressed(input, "ui_e", false) {
             owner.rotate_y(-0.5 * delta);

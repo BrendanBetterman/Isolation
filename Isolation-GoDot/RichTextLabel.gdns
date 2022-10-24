@@ -3,6 +3,6 @@
 [ext_resource path="res://HelloWorld.gdnlib" type="GDNativeLibrary" id=1]
 
 [resource]
-resource_name = "HelloWorld"
-class_name = "Pcamera"
+resource_name = "Use"
+class_name = "Use"
 library = ExtResource( 1 )

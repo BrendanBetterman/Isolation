@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -27,7 +27,7 @@
 [ext_resource path="res://Models/Kitchen/CoffeeMaker.fbx" type="PackedScene" id=25]
 [ext_resource path="res://P_Camera.gdns" type="Script" id=26]
 [ext_resource path="res://Music/It's just a burning memory.mp3" type="AudioStream" id=27]
-[ext_resource path="res://Music/Doze On The Bullet Train.mp3" type="AudioStream" id=28]
+[ext_resource path="res://Music/Cyberfuck 2069.mp3" type="AudioStream" id=28]
 [ext_resource path="res://Models/Small/OutLet.fbx" type="PackedScene" id=29]
 [ext_resource path="res://Models/Small/FireAlarm.fbx" type="PackedScene" id=30]
 [ext_resource path="res://Models/Small/FireExt.fbx" type="PackedScene" id=31]
@@ -47,12 +47,16 @@
 [ext_resource path="res://Models/Kitchen/Cupboard-L-Door-S.fbx" type="PackedScene" id=45]
 [ext_resource path="res://Models/Kitchen/Cupboard-Base-S.fbx" type="PackedScene" id=46]
 [ext_resource path="res://Shadow.gdns" type="Script" id=47]
+[ext_resource path="res://Models/Parking-Lot/car.fbx" type="PackedScene" id=48]
+[ext_resource path="res://Models/Parking-Lot/Lamp.fbx" type="PackedScene" id=49]
+[ext_resource path="res://Models/Parking-Lot/skybox.fbx" type="PackedScene" id=50]
+[ext_resource path="res://Models/Small/Key.fbx" type="PackedScene" id=51]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
 background_color = Color( 0.145098, 0.203922, 0.258824, 1 )
 background_energy = 0.0
-ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_color = Color( 0.317647, 0.823529, 1, 1 )
 ambient_light_energy = 0.0
 tonemap_mode = 2
 tonemap_exposure = 0.41
@@ -61,22 +65,37 @@ ss_reflections_max_steps = 14
 adjustment_brightness = 1.3
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 2.29675, 2.45442, 2.24548 )
+extents = Vector3( 2.29675, 5.70698, 2.24548 )
 
 [sub_resource type="ConcavePolygonShape" id=9]
 data = PoolVector3Array( 1.016, 0, 2.7432, 1.016, 1.8, 2.7432, 0, 0, 2.7432, 0, 0, 2.7432, 1.016, 1.8, 2.7432, 0, 2.38, 2.7432, 3.048, 0, -0.7638, 0, 0, -0.7638, 3.048, 2.38, -0.7638, 3.048, 2.38, -0.7638, 0, 0, -0.7638, 0, 2.38, -0.7638, 3.048, 2.38, -0.7638, 3.048, 2.38, 2.7432, 7.62, 2.38, -0.7638, 7.62, 2.38, -0.7638, 3.048, 2.38, 2.7432, 7.62, 2.38, 2.7432, 3.048, 2.38, 2.7432, 3.048, 2.38, -0.7638, 0, 2.38, 2.7432, 0, 2.38, 2.7432, 3.048, 2.38, -0.7638, 0, 2.38, 1.2426, 0, 2.38, 1.2426, 3.048, 2.38, -0.7638, 0, 2.38, 1.1045, 0, 2.38, 1.1045, 3.048, 2.38, -0.7638, 0, 2.38, -0.7638, 3.048, 0, -0.7638, 3.048, 2.38, -0.7638, 7.62, 0, -0.7638, 7.62, 0, -0.7638, 3.048, 2.38, -0.7638, 7.62, 2.38, -0.7638, 3.048, 2.38, 2.7432, 3.048, 0, 2.7432, 3.048, 2.38, 5.1816, 3.048, 2.38, 5.1816, 3.048, 0, 2.7432, 3.048, 0, 5.1816, 3.048, 2.38, 5.1816, 3.048, 0, 5.1816, 7.62, 2.38, 5.1816, 7.62, 2.38, 5.1816, 3.048, 0, 5.1816, 7.62, 0, 5.1816, 7.62, 2.38, 2.7432, 3.048, 2.38, 2.7432, 7.62, 2.38, 5.1816, 7.62, 2.38, 5.1816, 3.048, 2.38, 2.7432, 3.048, 2.38, 5.1816, 7.62, 0, 2.7432, 7.62, 2.38, 2.7432, 7.62, 0, 5.1816, 7.62, 0, 5.1816, 7.62, 2.38, 2.7432, 7.62, 2.38, 5.1816, 7.62, 1.7756, 0.6044, 7.62, 0.6044, 0.6044, 7.62, 2.38, -0.7638, 7.62, 2.38, -0.7638, 7.62, 0.6044, 0.6044, 7.62, 0, -0.7638, 7.62, 0.6044, 0.6044, 7.62, 0.6044, 2.1388, 7.62, 0, -0.7638, 7.62, 0, -0.7638, 7.62, 0.6044, 2.1388, 7.62, 0, 2.7432, 7.62, 1.7756, 2.1388, 7.62, 1.7756, 0.6044, 7.62, 2.38, 2.7432, 7.62, 2.38, 2.7432, 7.62, 1.7756, 0.6044, 7.62, 2.38, -0.7638, 7.62, 0.6044, 2.1388, 7.62, 1.7756, 2.1388, 7.62, 0, 2.7432, 7.62, 0, 2.7432, 7.62, 1.7756, 2.1388, 7.62, 2.38, 2.7432, 3.048, 2.38, 2.7432, 0, 2.38, 2.7432, 2.032, 1.8, 2.7432, 2.032, 1.8, 2.7432, 0, 2.38, 2.7432, 1.016, 1.8, 2.7432, 2.032, 0, 2.7432, 3.048, 0, 2.7432, 2.032, 1.8, 2.7432, 2.032, 1.8, 2.7432, 3.048, 0, 2.7432, 3.048, 2.38, 2.7432, 1.016, 1.8, 2.7432, 1.016, 0, 2.7432, 1.016, 1.8, 2.9031, 1.016, 1.8, 2.9031, 1.016, 0, 2.7432, 1.016, 0, 2.9031, 2.032, 1.8, 2.7432, 1.016, 1.8, 2.7432, 2.032, 1.8, 2.9031, 2.032, 1.8, 2.9031, 1.016, 1.8, 2.7432, 1.016, 1.8, 2.9031, 2.032, 0, 2.7432, 2.032, 1.8, 2.7432, 2.032, 0, 2.9031, 2.032, 0, 2.9031, 2.032, 1.8, 2.7432, 2.032, 1.8, 2.9031, 0.016, 0, 2.9031, -0.0675, 0, 5.0908, 0.016, 2.38, 2.9031, 0.016, 2.38, 2.9031, -0.0675, 0, 5.0908, -0.0675, 2.38, 5.0908, 2.9325, 0, 5.0908, 2.9325, 0, 2.9031, 2.9325, 2.38, 5.0908, 2.9325, 2.38, 5.0908, 2.9325, 0, 2.9031, 2.9325, 2.38, 2.9031, -0.0675, 0, 5.0908, 2.9325, 0, 5.0908, -0.0675, 2.38, 5.0908, -0.0675, 2.38, 5.0908, 2.9325, 0, 5.0908, 2.9325, 2.38, 5.0908, 2.9325, 2.38, 2.9031, 2.032, 1.8, 2.9031, 0.016, 2.38, 2.9031, 0.016, 2.38, 2.9031, 2.032, 1.8, 2.9031, 1.016, 1.8, 2.9031, 2.9325, 0, 2.9031, 2.032, 0, 2.9031, 2.9325, 2.38, 2.9031, 2.9325, 2.38, 2.9031, 2.032, 0, 2.9031, 2.032, 1.8, 2.9031, 0.016, 2.38, 2.9031, 1.016, 1.8, 2.9031, 0.016, 0, 2.9031, 0.016, 0, 2.9031, 1.016, 1.8, 2.9031, 1.016, 0, 2.9031, 0.016, 2.38, 2.9031, -0.0675, 2.38, 5.0908, 2.9325, 2.38, 2.9031, 2.9325, 2.38, 2.9031, -0.0675, 2.38, 5.0908, 2.9325, 2.38, 5.0908, 0, 0, 1.2426, 0, 2.38, 1.2426, 0.8626, 0, 1.2426, 0.8626, 0, 1.2426, 0, 2.38, 1.2426, 0.8626, 2.38, 1.2426, 0.8626, 2.38, 1.1045, 0.8626, 0, 1.1045, 0.8626, 2.38, 1.2426, 0.8626, 2.38, 1.2426, 0.8626, 0, 1.1045, 0.8626, 0, 1.2426, 0, 2.38, 1.2426, 0, 2.38, 1.1045, 0.8626, 2.38, 1.2426, 0.8626, 2.38, 1.2426, 0, 2.38, 1.1045, 0.8626, 2.38, 1.1045, 0, 2.38, 1.1045, 0, 0, 1.1045, 0.8626, 2.38, 1.1045, 0.8626, 2.38, 1.1045, 0, 0, 1.1045, 0.8626, 0, 1.1045, 0, 0, 1.1045, 0, 2.38, 1.1045, 0, 0, -0.7638, 0, 0, -0.7638, 0, 2.38, 1.1045, 0, 2.38, -0.7638, 0, 2.38, 1.2426, 0, 0, 1.2426, 0, 1.8, 1.384, 0, 1.8, 1.384, 0, 0, 1.2426, 0, 0, 1.384, 0, 2.38, 1.2426, 0, 1.8, 1.384, 0, 2.38, 2.7432, 0, 2.38, 2.7432, 0, 1.8, 1.384, 0, 1.8, 2.4, 0, 0, 2.4, 0, 0, 2.7432, 0, 1.8, 2.4, 0, 1.8, 2.4, 0, 0, 2.7432, 0, 2.38, 2.7432, 0, 0, 1.1045, 0, 0, -0.7638, 0, 0, 1.2426, 0, 0, 1.2426, 0, 0, -0.7638, 0, 0, 1.384, 0, 0, 1.384, 0, 0, -0.7638, 0, 0, 2.4, 0, 0, 2.4, 0, 0, -0.7638, 0, 0, 2.7432, 0, 0, 2.7432, 0, 0, -0.7638, 1.016, 0, 2.7432, 1.016, 0, 2.7432, 0, 0, -0.7638, 2.032, 0, 2.7432, 2.032, 0, 2.7432, 0, 0, -0.7638, 3.048, 0, 2.7432, 3.048, 0, 2.7432, 0, 0, -0.7638, 3.048, 0, -0.7638, 3.048, 0, 2.7432, 3.048, 0, -0.7638, 7.62, 0, 2.7432, 7.62, 0, 2.7432, 3.048, 0, -0.7638, 7.62, 0, -0.7638, 3.048, 0, 2.7432, 7.62, 0, 2.7432, 3.048, 0, 5.1816, 3.048, 0, 5.1816, 7.62, 0, 2.7432, 7.62, 0, 5.1816, 1.016, 0, 2.7432, 2.032, 0, 2.7432, 1.016, 0, 2.9031, 1.016, 0, 2.9031, 2.032, 0, 2.7432, 2.032, 0, 2.9031, -0.0675, 0, 5.0908, 0.016, 0, 2.9031, 2.9325, 0, 5.0908, 2.9325, 0, 5.0908, 0.016, 0, 2.9031, 2.9325, 0, 2.9031, 2.9325, 0, 2.9031, 0.016, 0, 2.9031, 2.032, 0, 2.9031, 2.032, 0, 2.9031, 0.016, 0, 2.9031, 1.016, 0, 2.9031, 0, 0, 1.1045, 0, 0, 1.2426, 0.8626, 0, 1.1045, 0.8626, 0, 1.1045, 0, 0, 1.2426, 0.8626, 0, 1.2426 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.69664, 0.622742, 1 )
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 0.104127, 0.169574, 0.823723 )
 
-[sub_resource type="BoxShape" id=6]
-extents = Vector3( 3.5, 1.5, 0.1 )
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.391082, 0.402892, 1.208 )
 
-[sub_resource type="BoxShape" id=7]
-extents = Vector3( 0.1, 1.5, 3 )
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.413889, 0.903201, 0.332537 )
 
-[sub_resource type="BoxShape" id=8]
-extents = Vector3( 0.114, 1.5, 1.5 )
+[sub_resource type="BoxShape" id=17]
+extents = Vector3( 0.0241815, 0.0701607, 0.0463282 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.606862, 0.209846, 1.07775 )
+
+[sub_resource type="BoxShape" id=13]
+extents = Vector3( 0.323014, 0.282381, 0.222597 )
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 0.797333, 0.308575, 0.29691 )
+
+[sub_resource type="BoxShape" id=15]
+extents = Vector3( 0.901565, 0.323325, 0.464067 )
+
+[sub_resource type="BoxShape" id=18]
+extents = Vector3( 0.75322, 0.557657, 1.56955 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -117,7 +136,7 @@ environment = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Room"]
 stream = ExtResource( 28 )
-volume_db = -35.244
+volume_db = -39.614
 pitch_scale = 0.56
 autoplay = true
 
@@ -161,7 +180,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.425889, 0.0196682, 1.4633 )
 [node name="Knocking" type="AudioStreamPlayer3D" parent="Room/Door"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08672, 0 )
 stream = ExtResource( 38 )
-unit_db = -10.0
+unit_db = -15.718
+pitch_scale = 1.04
 
 [node name="Door2" parent="Room" instance=ExtResource( 33 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.667577, 0.0196682, 2.79247 )
@@ -185,7 +205,7 @@ mesh = ExtResource( 35 )
 skeleton = NodePath("../MeshInstance/Shadow")
 
 [node name="KinematicBody" type="KinematicBody" parent="."]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3.011, 0, 3.6 )
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3.011, 1.16395, 3.6 )
 script = ExtResource( 17 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="KinematicBody"]
@@ -194,7 +214,7 @@ fov = 60.5
 script = ExtResource( 26 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, -4.44089e-15, 0, 1, 1.90735e-06, -2.23517e-07, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, -4.44089e-15, 0, 1, 1.90735e-06, -3.17797, 0 )
 shape = SubResource( 5 )
 
 [node name="HeartBeat" type="AudioStreamPlayer" parent="KinematicBody"]
@@ -211,42 +231,26 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.443347, 0, -0.426493 )
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 9 )
 
-[node name="RigidBody" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32196, 1.08558, -4.54175 )
-visible = false
-mode = 1
-
-[node name="bed" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23313, 0 )
-visible = false
-shape = SubResource( 4 )
-
-[node name="East" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.035, 0, 0.9568 )
-visible = false
-shape = SubResource( 6 )
-
-[node name="West" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.035, 0, -4.82987 )
-visible = false
-shape = SubResource( 6 )
-
-[node name="North" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.598016, 0, -1.86865 )
-visible = false
-shape = SubResource( 7 )
-
-[node name="North2" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.75179, 0, -1.86865 )
-visible = false
-shape = SubResource( 7 )
-
-[node name="North3" type="CollisionShape" parent="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75119, 0.0449104, 0.188231 )
-visible = false
-shape = SubResource( 8 )
+[node name="extra window" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69208, 1.55783, 1.42041 )
+shape = SubResource( 16 )
 
 [node name="Kitchen" type="Node" parent="."]
+
+[node name="KitchenBoxes" type="RigidBody" parent="Kitchen"]
+mode = 1
+
+[node name="Counters" type="CollisionShape" parent="Kitchen/KitchenBoxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69953, 0.546904, 0.10077 )
+shape = SubResource( 10 )
+
+[node name="OvenSink" type="CollisionShape" parent="Kitchen/KitchenBoxes"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.1089, 0.546904, -0.750114 )
+shape = SubResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Kitchen/KitchenBoxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0712297, 0.79732, 0.298802 )
+shape = SubResource( 11 )
 
 [node name="Toaster" parent="Kitchen" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288619, 0.939041, -0.67733 )
@@ -348,6 +352,15 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.83964
 
 [node name="Cupboard-R-Door-S" parent="Kitchen/Cupboards/Cupboard-Base-S2" instance=ExtResource( 41 )]
 
+[node name="CarKey" type="StaticBody" parent="Kitchen"]
+transform = Transform( 0.105934, 0.994373, 0, -0.994373, 0.105934, 0, 0, 0, 1, 2.48845, 0.958463, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Kitchen/CarKey"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00480771, 0.0575912, 0 )
+shape = SubResource( 17 )
+
+[node name="Key" parent="Kitchen/CarKey" instance=ExtResource( 51 )]
+
 [node name="BedRoom" type="Node" parent="."]
 
 [node name="Bed" parent="BedRoom" instance=ExtResource( 1 )]
@@ -359,6 +372,17 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.31513
 
 [node name="Lamp" parent="BedRoom/NightStand" instance=ExtResource( 16 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.10473, 0.533697, -0.0679102 )
+
+[node name="BedRoomBoxes" type="RigidBody" parent="BedRoom"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0809, 0, 3.52081 )
+
+[node name="BedBox" type="CollisionShape" parent="BedRoom/BedRoomBoxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148079, 0.336667, 0.119996 )
+shape = SubResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BedRoom/BedRoomBoxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.776358, 0.280335, 0.950846 )
+shape = SubResource( 13 )
 
 [node name="Living Room" type="Node" parent="."]
 
@@ -383,7 +407,54 @@ transform = Transform( 0.990631, 0, 0.136563, 0, 1, 0, -0.136563, 0, 0.990631, 0
 [node name="Couch" parent="Living Room" instance=ExtResource( 10 )]
 transform = Transform( 0.0291778, 0, 0.999574, 0, 1, 0, -0.999574, 0, 0.0291778, 5.94421, 0, 2.05628 )
 
+[node name="TVHitBox" type="RigidBody" parent="Living Room"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10405, 0, 0 )
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="Living Room/TVHitBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101558, 0.323785, -0.862479 )
+shape = SubResource( 14 )
+
+[node name="CouchBox" type="CollisionShape" parent="Living Room/TVHitBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127732, 0.495692, 1.98559 )
+shape = SubResource( 15 )
+
 [node name="BathRoom" type="Node" parent="."]
 
 [node name="Toilet" parent="BathRoom" instance=ExtResource( 39 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.77956, 0, 4.11965 )
+
+[node name="ParkingLot" type="Node" parent="."]
+
+[node name="StaticBody" type="StaticBody" parent="ParkingLot"]
+transform = Transform( 0.694219, 0, -0.719764, 0, 1, 0, 0.719764, 0, 0.694219, -22.9913, -0.00636673, -3.36377 )
+
+[node name="CarCollision" type="CollisionShape" parent="ParkingLot/StaticBody"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.593881, 0 )
+shape = SubResource( 18 )
+
+[node name="car2" parent="ParkingLot/StaticBody" instance=ExtResource( 48 )]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
+
+[node name="Lamp" parent="ParkingLot" instance=ExtResource( 49 )]
+transform = Transform( 0.138844, 0, -0.143953, 0, 0.2, 0, 0.143953, 0, 0.138844, -25.853, 0.00381756, -2.95368 )
+
+[node name="OmniLight" type="OmniLight" parent="ParkingLot/Lamp"]
+transform = Transform( 5, 0, 9.53674e-07, 0, 5, 0, -9.53674e-07, 0, 5, -0.0340805, 12.3847, 0.0353432 )
+light_color = Color( 0.898039, 0.756863, 0.329412, 1 )
+light_energy = 16.0
+
+[node name="SpotLight" type="SpotLight" parent="ParkingLot/Lamp"]
+transform = Transform( 3.57476, 3.47956, 0.33729, -0.45549, -0.0147032, 4.97919, 3.46607, -3.59061, 0.306469, 11.1871, 23.066, 10.7901 )
+light_color = Color( 0.788235, 0.905882, 1, 1 )
+light_energy = 7.459
+spot_range = 39.244
+spot_angle = 63.17
+
+[node name="skybox" parent="ParkingLot" instance=ExtResource( 50 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5034, 0, 0 )
+
+[connection signal="mouse_entered" from="Kitchen/CarKey" to="KinematicBody" method="_on_key_hover"]
+[connection signal="mouse_exited" from="Kitchen/CarKey" to="KinematicBody" method="_exit_key_hover"]
+[connection signal="mouse_entered" from="ParkingLot/StaticBody" to="KinematicBody" method="_on_car_hover"]
+[connection signal="mouse_exited" from="ParkingLot/StaticBody" to="KinematicBody" method="_exit_car_hover"]
