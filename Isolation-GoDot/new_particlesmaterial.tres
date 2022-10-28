@@ -3,7 +3,7 @@
 [resource]
 lifetime_randomness = 0.38
 emission_shape = 2
-emission_box_extents = Vector3( 5, 2, 5 )
+emission_box_extents = Vector3( 8, 2, 8 )
 direction = Vector3( 0, 180, 0 )
 spread = 117.24
 initial_velocity = 3.0
