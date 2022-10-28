@@ -1,0 +1,13 @@
+[gd_resource type="ParticlesMaterial" format=2]
+
+[resource]
+lifetime_randomness = 0.38
+emission_shape = 2
+emission_box_extents = Vector3( 5, 2, 5 )
+direction = Vector3( 0, 180, 0 )
+spread = 117.24
+initial_velocity = 3.0
+initial_velocity_random = 1.0
+anim_speed = 1.74
+anim_speed_random = 0.04
+anim_offset_random = 0.06
