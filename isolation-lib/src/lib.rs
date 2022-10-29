@@ -10,7 +10,8 @@ fn init(handle: InitHandle) {
     handle.add_class::<player::Player>();
     handle.add_class::<camera::Pcamera>();
     handle.add_class::<shadow::Shadow>();
-    handle.add_class::<hud::Use>();
+    handle.add_class::<hud::use_obj::Use>();
+    handle.add_class::<hud::dialogue::Dialogue>();
 }
 // Macro that creates the entry-points of the dynamic library.
 godot_init!(init);
