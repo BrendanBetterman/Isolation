@@ -221,8 +221,8 @@ transform = Transform( -4.37113e-07, 3.42019, -9.39693, -1.2151e-14, 9.39693, 3.
 fov = 60.5
 script = ExtResource( 26 )
 
-[node name="RayCast" type="RayCast" parent="KinematicBody/ClippedCamera"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -2.38419e-07, 2.38419e-07 )
+[node name="Ray" type="RayCast" parent="KinematicBody/ClippedCamera"]
+transform = Transform( 1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.0592411, -0.162764 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -4.44089e-15, 0, 1, 1.90735e-06, -3.17797, 0 )
@@ -476,6 +476,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5285, 0.0157492, 0 )
 
 [node name="Particles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1483, 3.3427, -0.652326 )
+emitting = false
 amount = 300
 lifetime = 1.12
 speed_scale = 0.1

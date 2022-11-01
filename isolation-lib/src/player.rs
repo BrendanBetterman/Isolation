@@ -1,3 +1,4 @@
+use gdnative::api::RayCast;
 use gdnative::prelude::*;
 use gdnative::export::hint::{EnumHint, IntHint, StringHint};
 /// The Player "class"
@@ -63,6 +64,15 @@ fn lerp(start:f32,end:f32,time:f32)->f32{
     }
     return out;
 }
+fn cast_ray(ref ray : gdnative::prelude::Ref<RayCast, gdnative::prelude::Unique>){
+    ray.force_raycast_update();
+    //godot_print!("{}",ray.get_collision_point().x);
+    
+    match ray.get_collider(){//let ray = 
+        Some(x) => godot_print!("{:?}",x.to_variant().to_string()),
+        None => godot_print!("fail"),//RayCast::new(),
+    };
+}
 // Only __one__ `impl` block can have the `#[methods]` attribute, which
 // will generate code to automatically bind any exported methods to Godot.
 #[methods]
@@ -80,6 +90,7 @@ impl Player {
     fn _can_use(&self,#[base]_owner: &KinematicBody)->bool{
         return self.key[0] || self.key[1];
     }
+    
     //Hover Functions
     #[method]
     fn _on_key_hover(&mut self,#[base]_owner: &KinematicBody){
@@ -102,7 +113,23 @@ impl Player {
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
         //mouse movement system- unsafe due to undetermined viewport
-        
+        unsafe{
+            let node = match owner.get_child(0){//
+                Some(x) => x.assume_unique(),
+                None => Node::new(),
+            };
+            let raycast = match node.get_child(0){
+                Some(x) => x.assume_unique(),
+                None => Node::new(),
+            };
+            match raycast.cast::<gdnative::api::RayCast>(){//let ray = 
+                Some(x) => cast_ray(x),
+                None => godot_print!("fail"),//RayCast::new(),
+            };
+            
+            //godot_print!("x:{} y:{} z:{}",ray.get_collision_point().x,ray.get_collision_point().y,ray.get_collision_point().z);
+            
+        }
         unsafe{
             let view = match owner.get_viewport(){
                 Some(x) =>x.clone(),
