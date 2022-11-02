@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -54,6 +54,7 @@
 [ext_resource path="res://Models/Parking-Lot/snow.fbx" type="PackedScene" id=52]
 [ext_resource path="res://new_particlesmaterial.tres" type="Material" id=53]
 [ext_resource path="res://Models/Parking-Lot/snowlot.fbx" type="PackedScene" id=54]
+[ext_resource path="res://Models/Parking-Lot/Rock.fbx" type="PackedScene" id=55]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -101,6 +102,12 @@ extents = Vector3( 0.901565, 0.323325, 0.464067 )
 
 [sub_resource type="BoxShape" id=18]
 extents = Vector3( 0.75322, 0.557657, 1.56955 )
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 0.17583, 0.104817, 0.247059 )
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 9.47128, 4.23093, 0.114713 )
 
 [sub_resource type="CubeMesh" id=19]
 size = Vector3( 0.1, 0.1, 0.1 )
@@ -223,6 +230,7 @@ script = ExtResource( 26 )
 
 [node name="Ray" type="RayCast" parent="KinematicBody/ClippedCamera"]
 transform = Transform( 1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.0592411, -0.162764 )
+cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -4.44089e-15, 0, 1, 1.90735e-06, -3.17797, 0 )
@@ -437,16 +445,6 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.77956
 
 [node name="ParkingLot" type="Node" parent="."]
 
-[node name="StaticBody" type="StaticBody" parent="ParkingLot"]
-transform = Transform( 0.694219, 0, -0.719764, 0, 1, 0, 0.719764, 0, 0.694219, -22.9913, -0.00636673, -3.36377 )
-
-[node name="CarCollision" type="CollisionShape" parent="ParkingLot/StaticBody"]
-transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.593881, 0 )
-shape = SubResource( 18 )
-
-[node name="car2" parent="ParkingLot/StaticBody" instance=ExtResource( 48 )]
-transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
-
 [node name="Lamp" parent="ParkingLot" instance=ExtResource( 49 )]
 transform = Transform( 0.138844, 0, -0.143953, 0, 0.2, 0, 0.143953, 0, 0.138844, -25.853, 0.00381756, -2.95368 )
 
@@ -465,14 +463,54 @@ spot_angle = 63.17
 [node name="skybox" parent="ParkingLot" instance=ExtResource( 50 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5034, 0, 0 )
 
-[node name="snow" parent="ParkingLot" instance=ExtResource( 52 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.0023, 0, -2.18273 )
-
-[node name="snow2" parent="ParkingLot" instance=ExtResource( 52 )]
-transform = Transform( -0.0918839, 0, -0.99577, 0, 1, 0, 0.99577, 0, -0.0918839, -38.0109, -0.462911, -0.31369 )
-
 [node name="snowlot" parent="ParkingLot" instance=ExtResource( 54 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5285, 0.0157492, 0 )
+
+[node name="snow" parent="ParkingLot/snowlot" instance=ExtResource( 52 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4738, -0.0157492, -2.18273 )
+
+[node name="snow2" parent="ParkingLot/snowlot/snow" instance=ExtResource( 52 )]
+transform = Transform( -0.0918839, 0, -0.99577, 0, 1, 0, 0.99577, 0, -0.0918839, -13.0086, -0.462911, 1.86904 )
+
+[node name="Interactables" type="Node" parent="ParkingLot"]
+
+[node name="CarTrigger" type="StaticBody" parent="ParkingLot/Interactables"]
+transform = Transform( 0.694219, 0, -0.719764, 0, 1, 0, 0.719764, 0, 0.694219, -22.9913, -0.00636673, -3.36377 )
+
+[node name="CarCollision" type="CollisionShape" parent="ParkingLot/Interactables/CarTrigger"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.593881, 0 )
+shape = SubResource( 18 )
+
+[node name="car2" parent="ParkingLot/Interactables/CarTrigger" instance=ExtResource( 48 )]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
+
+[node name="Rock" type="StaticBody" parent="ParkingLot/Interactables"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.7354, -0.00636673, -3.36377 )
+
+[node name="RockCollider" type="CollisionShape" parent="ParkingLot/Interactables/Rock"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.164732, 0 )
+shape = SubResource( 20 )
+
+[node name="Rock" parent="ParkingLot/Interactables/Rock" instance=ExtResource( 55 )]
+
+[node name="Walls" type="StaticBody" parent="ParkingLot/Interactables"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.991, 1.6171, -0.750448 )
+
+[node name="Wall" type="CollisionShape" parent="ParkingLot/Interactables/Walls"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -2.10483, 0.206303, -8.68774 )
+shape = SubResource( 21 )
+
+[node name="Wall2" type="CollisionShape" parent="ParkingLot/Interactables/Walls"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -2.10483, 0.206303, 10.7026 )
+shape = SubResource( 21 )
+
+[node name="Wall3" type="CollisionShape" parent="ParkingLot/Interactables/Walls"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.4309, 0.206303, 0.871925 )
+shape = SubResource( 21 )
+
+[node name="Wall4" type="CollisionShape" parent="ParkingLot/Interactables/Walls"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.32239, 0.206303, 0.871925 )
+shape = SubResource( 21 )
 
 [node name="Particles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1483, 3.3427, -0.652326 )
@@ -485,8 +523,3 @@ randomness = 0.36
 visibility_aabb = AABB( -5.725, -1.949, -4, 11.451, 3.819, 8 )
 process_material = ExtResource( 53 )
 draw_pass_1 = SubResource( 19 )
-
-[connection signal="mouse_entered" from="Kitchen/CarKey" to="KinematicBody" method="_on_key_hover"]
-[connection signal="mouse_exited" from="Kitchen/CarKey" to="KinematicBody" method="_exit_key_hover"]
-[connection signal="mouse_entered" from="ParkingLot/StaticBody" to="KinematicBody" method="_on_car_hover"]
-[connection signal="mouse_exited" from="ParkingLot/StaticBody" to="KinematicBody" method="_exit_car_hover"]

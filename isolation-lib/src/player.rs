@@ -1,10 +1,11 @@
+
 use gdnative::api::RayCast;
 use gdnative::prelude::*;
-use gdnative::export::hint::{EnumHint, IntHint, StringHint};
+
 /// The Player "class"
 #[derive(gdnative::derive::NativeClass)]
 #[inherit(KinematicBody)]
-#[register_with(register_members)]
+
 pub struct Player{
     sensitivity: f32,
     position: Vector3,
@@ -13,29 +14,9 @@ pub struct Player{
     move_speed: f32,
     crouched: bool,
     key: [bool;4],
+    dialogue: usize,
 }
-fn register_members(builder: &ClassBuilder<Player>) {
-    builder
-        .property::<String>("test/test_enum")
-        .with_hint(StringHint::Enum(EnumHint::new(vec![
-            "Hello".into(),
-            "World".into(),
-            "Testing".into(),
-        ])))
-        .with_getter(|_: &Player, _| "Hello".to_string())
-        .done();
 
-    builder
-        .property("test/test_flags")
-        .with_hint(IntHint::Flags(EnumHint::new(vec![
-            "A".into(),
-            "B".into(),
-            "C".into(),
-            "D".into(),
-        ])))
-        .with_getter(|_: &Player, _| 0)
-        .done();
-}
 impl Player {
     /// The "constructor" of the class.
     fn new( _owner: &KinematicBody) -> Self {
@@ -47,6 +28,7 @@ impl Player {
             move_speed: 2.0,
             crouched: false,
             key: [false;4],
+            dialogue: 0,
         }
     }
 }
@@ -64,14 +46,20 @@ fn lerp(start:f32,end:f32,time:f32)->f32{
     }
     return out;
 }
-fn cast_ray(ref ray : gdnative::prelude::Ref<RayCast, gdnative::prelude::Unique>){
+///Takes raycast obj and outputs the name of the obj its colliding with.
+fn cast_ray(ref ray : &gdnative::prelude::Ref<RayCast, gdnative::prelude::Unique>) ->String{
     ray.force_raycast_update();
     //godot_print!("{}",ray.get_collision_point().x);
     
-    match ray.get_collider(){//let ray = 
-        Some(x) => godot_print!("{:?}",x.to_variant().to_string()),
-        None => godot_print!("fail"),//RayCast::new(),
+    let var = ray.get_collider().to_variant().to_string();
+    let split = var.clone();
+    let mut sp = split.split(":");
+    let output = match sp.next(){
+        Some(x) => x,
+        None => "None",
     };
+    
+    return output.to_string();
 }
 // Only __one__ `impl` block can have the `#[methods]` attribute, which
 // will generate code to automatically bind any exported methods to Godot.
@@ -88,47 +76,47 @@ impl Player {
    
     #[method]
     fn _can_use(&self,#[base]_owner: &KinematicBody)->bool{
-        return self.key[0] || self.key[1];
-    }
-    
-    //Hover Functions
-    #[method]
-    fn _on_key_hover(&mut self,#[base]_owner: &KinematicBody){
-        self.key[0] = true;
-    }
-    #[method]
-    fn _exit_key_hover(&mut self,#[base]_owner: &KinematicBody){
-        self.key[0] = false;
+        let mut can = false;
+        for i in 0..self.key.len(){
+            if self.key[i]{
+                can = true;
+            }
+        }
+        return can;
     }
     #[method]
-    fn _on_car_hover(&mut self,#[base]_owner: &KinematicBody){
-        self.key[1] = true;
+    fn _get_dialogue(&self,#[base] _owner: &KinematicBody)->usize{
+        return self.dialogue;
     }
-    #[method]
-    fn _exit_car_hover(&mut self,#[base]_owner: &KinematicBody){
-        self.key[1] = false;
-    }
-    
     //End Of Hover Functions
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
         //mouse movement system- unsafe due to undetermined viewport
         unsafe{
+            //gets the child of current object as a refernce so you can modify it.
             let node = match owner.get_child(0){//
                 Some(x) => x.assume_unique(),
                 None => Node::new(),
             };
+            //gets the child of the child which is the ray cast obj.
             let raycast = match node.get_child(0){
                 Some(x) => x.assume_unique(),
                 None => Node::new(),
             };
-            match raycast.cast::<gdnative::api::RayCast>(){//let ray = 
-                Some(x) => cast_ray(x),
-                None => godot_print!("fail"),//RayCast::new(),
+            //cast the node grandchild to a raycast obj then push to cast_ray function.
+            let item = match raycast.cast::<gdnative::api::RayCast>(){//let ray = 
+                Some(x) => cast_ray(&x),
+                None => "None".to_string(),//RayCast::new(),
             };
-            
-            //godot_print!("x:{} y:{} z:{}",ray.get_collision_point().x,ray.get_collision_point().y,ray.get_collision_point().z);
-            
+            //check what is being hovered over
+            match item.as_str(){
+                "CarKey"=> self.key[0] = true,
+                "CarTrigger"=> self.key[1] = true,
+                "Rock"=> self.key[2] = true,
+                _ => {for i in 0..self.key.len(){
+                    self.key[i] = false;
+                };}
+            }   
         }
         unsafe{
             let view = match owner.get_viewport(){
@@ -148,7 +136,7 @@ impl Player {
             //godot_print!("{}",mouse_y);
         }
         let input = Input::godot_singleton();
-        //input.set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
+        input.set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
         
         //godot_print!("{}", input.get_last_mouse_speed().x);
        
@@ -188,10 +176,23 @@ impl Player {
             self.crouched = false;
         }
         if Input::is_action_pressed(input, "ui_use", false){
+            //Car Keys
             if self.key[0]{
-                godot_print!("teleport to parking lot");
                 self.position.x = -24.0;
+                //self.dialogue = 0;
+            //Car Locked
+            }else if self.key[1]{
+                self.dialogue = 1;
+            //Rock
+            }else if self.key[2]{
+                self.dialogue = 2;
             }
+        }
+        //Look Dialogue
+        if self.key[0]{
+            self.dialogue = 0;
+        }else if self.key[2]{
+            self.dialogue = 2;
         }
         owner.set_translation(self.position);
 
