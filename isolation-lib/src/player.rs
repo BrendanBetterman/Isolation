@@ -2,6 +2,8 @@
 use gdnative::api::RayCast;
 use gdnative::prelude::*;
 
+use self::missions::*;
+mod missions;
 /// The Player "class"
 #[derive(gdnative::derive::NativeClass)]
 #[inherit(KinematicBody)]
@@ -15,6 +17,7 @@ pub struct Player{
     crouched: bool,
     key: [bool;4],
     dialogue: usize,
+    mission: Missions,
 }
 
 impl Player {
@@ -29,6 +32,7 @@ impl Player {
             crouched: false,
             key: [false;4],
             dialogue: 0,
+            mission: Missions::new(),
         }
     }
 }
@@ -72,6 +76,9 @@ impl Player {
         self.rotation = owner.rotation();
         let node = Node::get_path(owner);
         godot_print!("{:?}",node);
+        //create Missions
+        self.mission = Missions::new();
+
     }
    
     #[method]
@@ -176,6 +183,7 @@ impl Player {
             self.crouched = false;
         }
         if Input::is_action_pressed(input, "ui_use", false){
+            self.mission.on_used(&self.key);
             //Car Keys
             if self.key[0]{
                 self.position.x = -24.0;
@@ -194,6 +202,8 @@ impl Player {
         }else if self.key[2]{
             self.dialogue = 2;
         }
+        
+
         owner.set_translation(self.position);
 
         /*
