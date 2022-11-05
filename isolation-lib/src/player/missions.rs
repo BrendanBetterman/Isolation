@@ -58,6 +58,7 @@ impl Missions{
             dialogue: -1,
         }
     }
+    
     pub fn set_quest(&mut self,id:usize,quest:Quest){
         self.quests[id] = quest;
     }
@@ -128,6 +129,21 @@ impl Missions{
         }else if id == 3 && self.quests[self.q_id].progress >=2 && !self.quests[self.q_id].toggles[2]{//rock
             self.dialogue = 4;
             self.quests[self.q_id].toggles[2] = true;
+        }
+    }
+    fn mission_one_can_pickup(&mut self,item:&String)->bool{
+        match get_id(item){
+            1=> self.quests[self.q_id].progress == 0,
+            2=> self.quests[self.q_id].progress <=4,
+            3 => self.quests[self.q_id].progress ==2,
+            _ => false,
+        }
+    }
+    pub fn can_pickup(&mut self, item: &String)->bool{
+
+        match self.q_id{
+            0 => self.mission_one_can_pickup(&item),
+            _ => false,
         }
     }
     pub fn on_used(&mut self, item: &String){

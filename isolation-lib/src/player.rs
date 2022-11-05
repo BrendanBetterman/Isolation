@@ -15,10 +15,11 @@ pub struct Player{
     velocity: Vector3,
     move_speed: f32,
     crouched: bool,
-    key: [bool;4],
+    pickupable: bool,
     item: String,
     dialogue: i32,
     mission: Missions,
+    mouse_confined: bool,
 }
 
 impl Player {
@@ -31,10 +32,11 @@ impl Player {
             velocity: Vector3::new(0.0,0.0,0.0),
             move_speed: 2.0,
             crouched: false,
-            key: [false;4],
+            pickupable: false,
             item: "".to_string(),
             dialogue: 0,
             mission: Missions::new(),
+            mouse_confined: true,
         }
     }
 }
@@ -85,75 +87,13 @@ impl Player {
    
     #[method]
     fn _can_use(&self,#[base]_owner: &KinematicBody)->bool{
-        let mut can = false;
-        for i in 0..self.key.len(){
-            if self.key[i]{
-                can = true;
-            }
-        }
-        return can;
+        return self.pickupable;
     }
     #[method]
     fn _get_dialogue(&self,#[base] _owner: &KinematicBody)->i32{
         return self.dialogue;
     }
-    //End Of Hover Functions
-    #[method]
-    fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
-        //mouse movement system- unsafe due to undetermined viewport
-        unsafe{
-            //gets the child of current object as a refernce so you can modify it.
-            let node = match owner.get_child(0){//
-                Some(x) => x.assume_unique(),
-                None => Node::new(),
-            };
-            //gets the child of the child which is the ray cast obj.
-            let raycast = match node.get_child(0){
-                Some(x) => x.assume_unique(),
-                None => Node::new(),
-            };
-            //cast the node grandchild to a raycast obj then push to cast_ray function.
-            let item = match raycast.cast::<gdnative::api::RayCast>(){//let ray = 
-                Some(x) => cast_ray(&x),
-                None => "None".to_string(),//RayCast::new(),
-            };
-            self.item = item;
-            //check what is being hovered over
-            /*match item.as_str(){
-                "CarKey"=> self.key[0] = true,
-                "CarTrigger"=> self.key[1] = true,
-                "Rock"=> self.key[2] = true,
-                _ => {for i in 0..self.key.len(){
-                    self.key[i] = false;
-                };}
-            } */  
-        }
-        unsafe{
-            let view = match owner.get_viewport(){
-                Some(x) =>x.clone(),
-                None => panic!("Couldn't get viewport"),
-            };  
-            //godot_print!("{}",);
-            let mouse_x = view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5;
-            let mut mouse_y = view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5;
-            if mouse_y > 0.06{
-                mouse_y = 0.06;
-            }else if mouse_y < -0.1{
-                mouse_y = -0.1;
-            }
-            self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
-            owner.set_rotation(self.rotation);
-            //godot_print!("{}",mouse_y);
-        }
-        let input = Input::godot_singleton();
-        input.set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
-        
-        //godot_print!("{}", input.get_last_mouse_speed().x);
-       
-        //godot_print!("{}",mouse.global_position().x);
-        //owner.rotate_y(input.get_last_mouse_speed().x as f64 * delta);
-        //owner.set_rotation(Vector3::new(m.0 as f32,0.0,0.0));
-        
+    fn movement(&self,input:&Input)-> Vector3{
         let mut new_velocity = Vector3::new(0.0,0.0,0.0);
         if Input::is_action_pressed(input, "ui_up", false) {
             new_velocity.z -= self.rotation.y.sin();
@@ -170,14 +110,10 @@ impl Player {
             new_velocity.z += (self.rotation.y+1.570796).sin();
             new_velocity.x += (self.rotation.y + 4.712388).cos();
         }
-        self.velocity.x = lerp(self.velocity.x,new_velocity.x* if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
-        self.velocity.z = lerp(self.velocity.z,new_velocity.z*if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
-        
-        //self.position.x += self.velocity.x;
-        //self.position.z += self.velocity.z;
-        
-        owner.move_and_collide(self.velocity, false, true, false);
-        self.position = owner.translation();
+        return new_velocity;
+    }
+    fn crouch(&mut self,input:&Input){
+        //crouch 
         if Input::is_action_pressed(input, "ui_q", false) {
             self.position.y = lerp(self.position.y, 0.90,0.09);
             self.crouched = true;
@@ -185,45 +121,94 @@ impl Player {
             self.position.y = lerp(self.position.y, 1.48,0.09);
             self.crouched = false;
         }
+    }
+    fn quest_loop(&mut self,input:&Input){
         self.mission.look(&self.item);
         self.dialogue = self.mission.dialogue;
         if Input::is_action_pressed(input, "ui_use", false){
             self.mission.on_used(&self.item);
-            /* 
-            //Car Keys
-            if self.key[0]{
-                self.position.x = -24.0;
-                //self.dialogue = 0;
-            //Car Locked
-            }else if self.key[1]{
-                self.dialogue = 1;
-            //Rock
-            }else if self.key[2]{
-                self.dialogue = 2;
-            }*/
         }
-        
         if self.mission.should_tp{
             self.mission.should_tp = false;
             self.position = self.mission.location;
         }
-        //Look Dialogue
-        /* 
-        if self.key[0]{
-            self.dialogue = 0;
-        }else if self.key[2]{
-            self.dialogue = 2;
-        }*/
-        
-
-        owner.set_translation(self.position);
-
-        /*
-        if Input::is_action_pressed(input, "ui_e", false) {
-            owner.rotate_y(-0.5 * delta);
+    }
+    fn quest_can_pickup(&mut self){
+        self.pickupable = self.mission.can_pickup(&self.item);
+    }
+    ///Needs owner for viewport, sets rotation of player using mouse position.
+    fn mouse_rotation(&mut self,owner:&KinematicBody){
+        //mouse movement system- unsafe due to undetermined viewport
+        unsafe{
+            let view = match owner.get_viewport(){
+                Some(x) =>x.clone(),
+                None => panic!("Couldn't get viewport"),
+            };  
+            let mouse_x = view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5;
+            let mut mouse_y = view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5;
+            if mouse_y > 0.06{
+                mouse_y = 0.06;
+            }else if mouse_y < -0.1{
+                mouse_y = -0.1;
+            }
+            self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
         }
-        */
-        //godot_print!("Hello world from node {}!", base.to_string());
+    }
+    ///Needs owner to get the raycast grandchild object.
+    ///Then it gets the name of the obj its looking at and sets it self.item
+    fn raycast_item(&mut self,owner:&KinematicBody){
+        unsafe{
+            //gets the child of current object as a refernce so you can modify it.
+            let node = match owner.get_child(0){//
+                Some(x) => x.assume_unique(),
+                None => Node::new(),
+            };
+            //gets the child of the child which is the ray cast obj.
+            let raycast = match node.get_child(0){
+                Some(x) => x.assume_unique(),
+                None => Node::new(),
+            };
+            //cast the node grandchild to a raycast obj then push to cast_ray function.
+            let item = match raycast.cast::<gdnative::api::RayCast>(){//let ray = 
+                Some(x) => cast_ray(&x),
+                None => "None".to_string(),//RayCast::new(),
+            };
+            self.item = item; 
+        }
+    }
+    //End Of Hover Functions
+    #[method]
+    fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
+        let input = Input::godot_singleton();
+        //enable/ disable mouse interaction with camera rotation
+        if Input::is_action_just_pressed(input,"ui_cancel", false){
+            self.mouse_confined = !self.mouse_confined;
+            godot_print!("{}",self.mouse_confined);
+        }
+        //if game is paused
+        if self.mouse_confined{
+            //hide and lock mouse to screen
+            input.set_mouse_mode(Input::MOUSE_MODE_CONFINED);
+            input.set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
+            //get raycast item
+            self.raycast_item(owner);
+            //mouse Movement
+            self.mouse_rotation(owner);
+            owner.set_rotation(self.rotation);
+            //Movement
+            let mut _new_velocity = self.movement(input);
+            self.velocity.x = lerp(self.velocity.x,_new_velocity.x* if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
+            self.velocity.z = lerp(self.velocity.z,_new_velocity.z*if self.crouched {self.move_speed/2.0}else{self.move_speed} * delta as f32,0.09);
+            owner.move_and_collide(self.velocity, false, true, false);
+            self.position = owner.translation();
+            
+            self.crouch(input);
+            self.quest_loop(input);
+            self.quest_can_pickup();
+            owner.set_translation(self.position);//if quest requires a TP also handles crouch pos
+        }else{
+            input.set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+        }
     }
     
 
