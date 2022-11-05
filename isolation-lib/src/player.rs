@@ -16,7 +16,8 @@ pub struct Player{
     move_speed: f32,
     crouched: bool,
     key: [bool;4],
-    dialogue: usize,
+    item: String,
+    dialogue: i32,
     mission: Missions,
 }
 
@@ -31,6 +32,7 @@ impl Player {
             move_speed: 2.0,
             crouched: false,
             key: [false;4],
+            item: "".to_string(),
             dialogue: 0,
             mission: Missions::new(),
         }
@@ -92,7 +94,7 @@ impl Player {
         return can;
     }
     #[method]
-    fn _get_dialogue(&self,#[base] _owner: &KinematicBody)->usize{
+    fn _get_dialogue(&self,#[base] _owner: &KinematicBody)->i32{
         return self.dialogue;
     }
     //End Of Hover Functions
@@ -115,15 +117,16 @@ impl Player {
                 Some(x) => cast_ray(&x),
                 None => "None".to_string(),//RayCast::new(),
             };
+            self.item = item;
             //check what is being hovered over
-            match item.as_str(){
+            /*match item.as_str(){
                 "CarKey"=> self.key[0] = true,
                 "CarTrigger"=> self.key[1] = true,
                 "Rock"=> self.key[2] = true,
                 _ => {for i in 0..self.key.len(){
                     self.key[i] = false;
                 };}
-            }   
+            } */  
         }
         unsafe{
             let view = match owner.get_viewport(){
@@ -182,8 +185,11 @@ impl Player {
             self.position.y = lerp(self.position.y, 1.48,0.09);
             self.crouched = false;
         }
+        self.mission.look(&self.item);
+        self.dialogue = self.mission.dialogue;
         if Input::is_action_pressed(input, "ui_use", false){
-            self.mission.on_used(&self.key);
+            self.mission.on_used(&self.item);
+            /* 
             //Car Keys
             if self.key[0]{
                 self.position.x = -24.0;
@@ -194,14 +200,20 @@ impl Player {
             //Rock
             }else if self.key[2]{
                 self.dialogue = 2;
-            }
+            }*/
+        }
+        
+        if self.mission.should_tp{
+            self.mission.should_tp = false;
+            self.position = self.mission.location;
         }
         //Look Dialogue
+        /* 
         if self.key[0]{
             self.dialogue = 0;
         }else if self.key[2]{
             self.dialogue = 2;
-        }
+        }*/
         
 
         owner.set_translation(self.position);

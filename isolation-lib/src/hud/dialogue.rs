@@ -7,7 +7,7 @@ use std::io::{self, prelude::*, BufReader};
 #[inherit(RichTextLabel)]
 pub struct Dialogue{
     toggle: bool,
-    id: usize,
+    id: i32,
     lang: Vec<String>,
     options: u32,
 }
@@ -31,7 +31,12 @@ impl Dialogue{
             unsafe{
                 let test = node.call("_get_dialogue", &[]);
                 //self.toggle = Variant::to_string(&test) == "True";
-                self.id = Variant::to_string(&test).parse::<usize>().unwrap();
+                self.id = Variant::to_string(&test).parse::<i32>().unwrap();
+                if self.id == -1{
+                    self.toggle = false;
+                }else{
+                    self.toggle = true;
+                }
             }
         }
     }
@@ -68,18 +73,13 @@ impl Dialogue{
             }
         }
         let mut bbcode = "[center][color=white][".to_owned();
-        bbcode.push_str(&self.lang[self.id]);
+        if self.id != -1{
+            bbcode.push_str(&self.lang[self.id as usize]);
+        }
         let end = "][/color]".to_string();
         bbcode.push_str(&end);
         owner.set_bbcode(&bbcode);
-        let input = Input::godot_singleton();
-        if Input::is_action_just_pressed(input, "ui_accept", false) {
-            if self.id < self.lang.capacity()-1{
-                self.id += 1;
-            }else{
-                self.id = 0;
-            }
-        }
+        
         if self.toggle{
             owner.set_percent_visible(1.0);
         }else{
