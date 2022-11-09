@@ -1,0 +1,13 @@
+"filename", "language", "TOML", "Rust", "comment", "blank", "total"
+"c:\Rust\Isolation\isolation-lib\Cargo.toml", "TOML", 8, 0, 1, 3, 12
+"c:\Rust\Isolation\isolation-lib\src\camera.rs", "Rust", 0, 25, 20, 8, 53
+"c:\Rust\Isolation\isolation-lib\src\helloworld.rs", "Rust", 0, 24, 19, 7, 50
+"c:\Rust\Isolation\isolation-lib\src\hud.rs", "Rust", 0, 3, 0, 0, 3
+"c:\Rust\Isolation\isolation-lib\src\hud\dialogue.rs", "Rust", 0, 72, 12, 5, 89
+"c:\Rust\Isolation\isolation-lib\src\hud\dialogue_box.rs", "Rust", 0, 46, 11, 3, 60
+"c:\Rust\Isolation\isolation-lib\src\hud\use_obj.rs", "Rust", 0, 42, 6, 1, 49
+"c:\Rust\Isolation\isolation-lib\src\lib.rs", "Rust", 0, 16, 16, 1, 33
+"c:\Rust\Isolation\isolation-lib\src\player.rs", "Rust", 0, 206, 27, 25, 258
+"c:\Rust\Isolation\isolation-lib\src\player\missions.rs", "Rust", 0, 154, 7, 11, 172
+"c:\Rust\Isolation\isolation-lib\src\shadow.rs", "Rust", 0, 24, 1, 2, 27
+"Total", "-", 8, 612, 120, 66, 806

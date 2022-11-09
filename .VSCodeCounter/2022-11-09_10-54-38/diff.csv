@@ -1,0 +1,8 @@
+"filename", "language", "Rust", "comment", "blank", "total"
+"c:\Rust\Isolation\isolation-lib\src\hud.rs", "Rust", 1, 0, 0, 1
+"c:\Rust\Isolation\isolation-lib\src\hud\dialogue.rs", "Rust", -2, 0, 2, 0
+"c:\Rust\Isolation\isolation-lib\src\hud\dialogue_box.rs", "Rust", 46, 11, 3, 60
+"c:\Rust\Isolation\isolation-lib\src\lib.rs", "Rust", 1, 0, 0, 1
+"c:\Rust\Isolation\isolation-lib\src\player.rs", "Rust", 25, 2, 13, 40
+"c:\Rust\Isolation\isolation-lib\src\player\missions.rs", "Rust", 17, -7, -2, 8
+"Total", "-", 88, 6, 16, 110

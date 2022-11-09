@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/walls.obj-e1ac8b02b2c27ddac6c3441d2c41e7a5.mesh"
+
+[deps]
+
+files=[ "res://.import/walls.obj-e1ac8b02b2c27ddac6c3441d2c41e7a5.mesh" ]
+
+source_file="res://Models/Grocery/walls.obj"
+dest_files=[ "res://.import/walls.obj-e1ac8b02b2c27ddac6c3441d2c41e7a5.mesh", "res://.import/walls.obj-e1ac8b02b2c27ddac6c3441d2c41e7a5.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
