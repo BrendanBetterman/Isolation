@@ -135,7 +135,7 @@ impl Player {
         }
         if self.mission.should_tp{
             
-            self.unhide_obj(owner, "../Chrismas");
+            self.unhide_obj(owner, "../Hideables/Chrismas");
             
             self.mission.should_tp = false;
             self.position = self.mission.location;

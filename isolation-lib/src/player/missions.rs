@@ -93,7 +93,7 @@ impl Missions{
         if id == 1 && self.quests[self.q_id].progress <=1{
             //use car keys
             self.quests[self.q_id]._add_progress();
-            self.location = Vector3::new(-24.0,0.0,0.0);
+            self.location = Vector3::new(-28.0,0.0,4.0);
             self.should_tp = true;
             self.dialogue = 1;
             

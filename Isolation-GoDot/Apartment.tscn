@@ -167,7 +167,7 @@ environment = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Room"]
 stream = ExtResource( 28 )
-volume_db = -39.614
+volume_db = -25.0
 pitch_scale = 0.56
 autoplay = true
 
@@ -503,7 +503,7 @@ shape = SubResource( 18 )
 transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
 
 [node name="Rock" type="StaticBody" parent="ParkingLot/Interactables"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.7354, -0.00636673, -3.36377 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9014, 0.116697, -0.588148 )
 
 [node name="RockCollider" type="CollisionShape" parent="ParkingLot/Interactables/Rock"]
 transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.164732, 0 )
@@ -697,13 +697,15 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 0.588915, 21.59
 [node name="Beans18" parent="Grocery/Beans" instance=ExtResource( 58 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 0.588915, 21.6767 )
 
-[node name="Chrismas" type="Spatial" parent="."]
+[node name="Hideables" type="Node" parent="."]
+
+[node name="Chrismas" type="Spatial" parent="Hideables"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78908, 0, -0.672454 )
 visible = false
 
-[node name="Tree" parent="Chrismas" instance=ExtResource( 59 )]
+[node name="Tree" parent="Hideables/Chrismas" instance=ExtResource( 59 )]
 
-[node name="OmniLight" type="OmniLight" parent="Chrismas"]
+[node name="OmniLight" type="OmniLight" parent="Hideables/Chrismas"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00421047, 0.8197, 0 )
 light_color = Color( 0.784314, 0.117647, 0.803922, 1 )
 light_energy = 3.055
