@@ -1,6 +1,6 @@
 use gdnative::{prelude::*, api::{RichTextLabel}};
 use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
+use std::io::{prelude::*, BufReader};
 
 /// The Player "class"
 #[derive(NativeClass)]
@@ -9,7 +9,7 @@ pub struct Dialogue{
     toggle: bool,
     id: i32,
     lang: Vec<String>,
-    options: u32,
+    
 }
 //Non Godot functions
 impl Dialogue{
@@ -18,7 +18,7 @@ impl Dialogue{
             toggle: true,
             id: 0,
             lang: Vec::new(),
-            options: 0,
+           
         }
     }
     ///Checks the player info.

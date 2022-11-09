@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://RichTextLabel.gdns" type="Script" id=1]
 [ext_resource path="res://Dialogue.gdns" type="Script" id=2]
+[ext_resource path="res://Panel2.gdns" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.8, 0.788235, 0.647059, 1 )
@@ -53,6 +54,7 @@ margin_top = 512.0
 margin_right = 620.0
 margin_bottom = 552.0
 custom_styles/panel = SubResource( 4 )
+script = ExtResource( 3 )
 
 [node name="Dialogue" type="RichTextLabel" parent="Panel2"]
 anchor_left = 0.5

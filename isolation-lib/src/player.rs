@@ -124,7 +124,10 @@ impl Player {
     }
     fn quest_loop(&mut self,input:&Input){
         self.mission.look(&self.item);
+        
         self.dialogue = self.mission.dialogue;
+            
+        
         if Input::is_action_pressed(input, "ui_use", false){
             self.mission.on_used(&self.item);
         }

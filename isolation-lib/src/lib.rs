@@ -12,6 +12,7 @@ fn init(handle: InitHandle) {
     handle.add_class::<shadow::Shadow>();
     handle.add_class::<hud::use_obj::Use>();
     handle.add_class::<hud::dialogue::Dialogue>();
+    handle.add_class::<hud::dialogue_box::DialogueBox>();
 }
 // Macro that creates the entry-points of the dynamic library.
 godot_init!(init);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=77 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -113,6 +113,18 @@ extents = Vector3( 9.47128, 4.23093, 0.114713 )
 
 [sub_resource type="CubeMesh" id=19]
 size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="BoxShape" id=23]
+extents = Vector3( 0.366973, 1, 9.60979 )
+
+[sub_resource type="BoxShape" id=22]
+extents = Vector3( 0.359169, 0.489358, 0.40716 )
+
+[sub_resource type="BoxShape" id=24]
+extents = Vector3( 0.58963, 0.849045, 5.44539 )
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 0.10531, 1.14937, 1 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -269,10 +281,6 @@ shape = SubResource( 10 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.1089, 0.546904, -0.750114 )
 shape = SubResource( 10 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Kitchen/KitchenBoxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0712297, 0.79732, 0.298802 )
-shape = SubResource( 11 )
-
 [node name="Toaster" parent="Kitchen" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288619, 0.939041, -0.67733 )
 
@@ -285,14 +293,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.021173 )
 [node name="Oven-Door" parent="Kitchen/Oven" instance=ExtResource( 4 )]
 transform = Transform( 0.500302, 0.865851, 0, -0.865851, 0.500302, 0, 0, 0, 1, 0.316376, 0.148086, 0.00323194 )
 
-[node name="Fridge-Base" parent="Kitchen" instance=ExtResource( 14 )]
+[node name="Fridge" type="StaticBody" parent="Kitchen"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.321188 )
 
-[node name="Fridge-Door" parent="Kitchen/Fridge-Base" instance=ExtResource( 2 )]
+[node name="Fridge-Base" parent="Kitchen/Fridge" instance=ExtResource( 14 )]
+
+[node name="Fridge-Door" parent="Kitchen/Fridge/Fridge-Base" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.452241, 1.07332, 0.345794 )
 
-[node name="Fridge-bottom" parent="Kitchen/Fridge-Base" instance=ExtResource( 9 )]
+[node name="Fridge-bottom" parent="Kitchen/Fridge/Fridge-Base" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.461356, 0, 0.339579 )
+
+[node name="FridgeCollison" type="CollisionShape" parent="Kitchen/Fridge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0969995, 0.79732, -0.022386 )
+shape = SubResource( 11 )
 
 [node name="Sink" parent="Kitchen" instance=ExtResource( 23 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.832, 0, -0.75 )
@@ -580,5 +594,48 @@ omni_range = 3.685
 [node name="Grocery" parent="Grocery" instance=ExtResource( 56 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50883, 0, 21.073 )
 
-[node name="Mannequin" parent="Grocery" instance=ExtResource( 57 )]
+[node name="GroceryWalls" type="StaticBody" parent="Grocery"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823421, 1.67973, 22.7271 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Grocery/GroceryWalls"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9896, 0, -1.07612 )
+shape = SubResource( 23 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Grocery/GroceryWalls"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.55837, 0, -1.07612 )
+shape = SubResource( 23 )
+
+[node name="Mannequin" type="StaticBody" parent="Grocery"]
 transform = Transform( 0.708355, 0, -0.24644, 0, 0.75, 0, 0.24644, 0, 0.708355, -2.61601, 0, 25.1958 )
+
+[node name="Mannequin" parent="Grocery/Mannequin" instance=ExtResource( 57 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Grocery/Mannequin"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999998, 0, 0, 0, 0.999999, -0.0258489, 0.961384, -0.074295 )
+shape = SubResource( 22 )
+
+[node name="Shelf" type="StaticBody" parent="Grocery"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.1319 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Grocery/Shelf"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43707, 1.07986, 0 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Grocery/Shelf"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.39987, 1.07986, 0 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="Grocery/Shelf"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40769, 1.07986, 0 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="Grocery/Shelf"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50282, 1.07986, 0 )
+shape = SubResource( 24 )
+
+[node name="G_Door" type="StaticBody" parent="Grocery"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4071, 1.67973, 22.7271 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Grocery/G_Door"]
+shape = SubResource( 25 )
