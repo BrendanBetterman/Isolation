@@ -1,5 +1,5 @@
 
-use gdnative::api::RayCast;
+use gdnative::api::{RayCast, MeshInstance};
 use gdnative::prelude::*;
 
 use self::missions::*;
@@ -93,6 +93,7 @@ impl Player {
     fn _get_dialogue(&self,#[base] _owner: &KinematicBody)->i32{
         return self.dialogue;
     }
+    ///Handles the inputs to move the player
     fn movement(&self,input:&Input)-> Vector3{
         let mut new_velocity = Vector3::new(0.0,0.0,0.0);
         if Input::is_action_pressed(input, "ui_up", false) {
@@ -112,6 +113,7 @@ impl Player {
         }
         return new_velocity;
     }
+    ///Lerped crouch went input is given
     fn crouch(&mut self,input:&Input){
         //crouch 
         if Input::is_action_pressed(input, "ui_q", false) {
@@ -122,7 +124,7 @@ impl Player {
             self.crouched = false;
         }
     }
-    fn quest_loop(&mut self,input:&Input){
+    fn quest_loop(&mut self,input:&Input,owner:&KinematicBody){
         self.mission.look(&self.item);
         
         self.dialogue = self.mission.dialogue;
@@ -132,28 +134,44 @@ impl Player {
             self.mission.on_used(&self.item);
         }
         if self.mission.should_tp{
+            
+            self.unhide_obj(owner, "../Chrismas");
+            
             self.mission.should_tp = false;
             self.position = self.mission.location;
+            
         }
     }
     fn quest_can_pickup(&mut self){
         self.pickupable = self.mission.can_pickup(&self.item);
     }
     ///Needs owner for viewport, sets rotation of player using mouse position.
-    fn mouse_rotation(&mut self,owner:&KinematicBody){
+    fn mouse_rotation(&mut self,owner:&KinematicBody,input:&Input){
         //mouse movement system- unsafe due to undetermined viewport
         unsafe{
             let view = match owner.get_viewport(){
                 Some(x) =>x.clone(),
                 None => panic!("Couldn't get viewport"),
             };  
-            let mouse_x = view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5;
+            
+            let mut mouse_x = view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5;
             let mut mouse_y = view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5;
+            //godot_print!("{:?}",view.assume_unique().get_mouse_position());
             if mouse_y > 0.06{
                 mouse_y = 0.06;
             }else if mouse_y < -0.1{
                 mouse_y = -0.1;
             }
+            if mouse_x < -0.25{
+                let mouse = Vector2::new((mouse_x+1.0)*view.assume_unique().size().x,view.assume_unique().get_mouse_position().y);//
+                input.warp_mouse_position(mouse);
+                mouse_x +=0.5;
+            }else if mouse_x > 0.25{
+                let mouse = Vector2::new((mouse_x)*view.assume_unique().size().x,view.assume_unique().get_mouse_position().y);
+                input.warp_mouse_position(mouse);
+                mouse_x -=0.5;
+            }
+            
             self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
         }
     }
@@ -179,6 +197,21 @@ impl Player {
             self.item = item; 
         }
     }
+    
+    fn unhide_obj(&self,owner:&KinematicBody,name:&str){
+        unsafe{
+            let tmp = Node::get_node(&owner,NodePath::from_str(name));
+            let obj = match tmp{
+                Some(x)=>  x.assume_unique(),
+                None=> Node::new(),
+            };
+            
+            match obj.cast::<gdnative::api::Spatial>(){
+                Some(x) => x.show(),
+                None => godot_error!("Fail"),
+            };
+        }
+    }
     //End Of Hover Functions
     #[method]
     fn _physics_process(&mut self,#[base]owner: &KinematicBody, delta: f64) {
@@ -186,7 +219,13 @@ impl Player {
         //enable/ disable mouse interaction with camera rotation
         if Input::is_action_just_pressed(input,"ui_cancel", false){
             self.mouse_confined = !self.mouse_confined;
-            godot_print!("{}",self.mouse_confined);
+            if self.mouse_confined{
+                let m = Vector2::new((self.rotation.y/self.sensitivity +0.5)*1280.0,(self.rotation.z/self.sensitivity+0.5)*720.0 );
+                input.warp_mouse_position(m);
+            }
+            //godot_print!("{}",self.mouse_confined);
+
+            
         }
         //if game is paused
         if self.mouse_confined{
@@ -196,7 +235,7 @@ impl Player {
             //get raycast item
             self.raycast_item(owner);
             //mouse Movement
-            self.mouse_rotation(owner);
+            self.mouse_rotation(owner,input);
             owner.set_rotation(self.rotation);
             //Movement
             let mut _new_velocity = self.movement(input);
@@ -206,7 +245,8 @@ impl Player {
             self.position = owner.translation();
             
             self.crouch(input);
-            self.quest_loop(input);
+            
+            self.quest_loop(input,owner);
             self.quest_can_pickup();
             owner.set_translation(self.position);//if quest requires a TP also handles crouch pos
         }else{

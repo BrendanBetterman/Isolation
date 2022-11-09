@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -57,6 +57,8 @@
 [ext_resource path="res://Models/Parking-Lot/Rock.fbx" type="PackedScene" id=55]
 [ext_resource path="res://Models/Grocery/Grocery.fbx" type="PackedScene" id=56]
 [ext_resource path="res://Models/Grocery/Mannequin.fbx" type="PackedScene" id=57]
+[ext_resource path="res://Models/Grocery/Beans.fbx" type="PackedScene" id=58]
+[ext_resource path="res://Models/Chrismas/Tree.fbx" type="PackedScene" id=59]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -609,7 +611,6 @@ shape = SubResource( 23 )
 transform = Transform( 0.708355, 0, -0.24644, 0, 0.75, 0, 0.24644, 0, 0.708355, -2.61601, 0, 25.1958 )
 
 [node name="Mannequin" parent="Grocery/Mannequin" instance=ExtResource( 57 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Grocery/Mannequin"]
 transform = Transform( 0.999999, 0, 0, 0, 0.999998, 0, 0, 0, 0.999999, -0.0258489, 0.961384, -0.074295 )
@@ -639,3 +640,71 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4071, 1.67973, 22.7271 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Grocery/G_Door"]
 shape = SubResource( 25 )
+
+[node name="Beans" type="Spatial" parent="Grocery"]
+
+[node name="Beans" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.53117, 21.073 )
+
+[node name="Beans2" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.53117, 21.1507 )
+
+[node name="Beans3" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.53117, 21.3311 )
+
+[node name="Beans4" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.53117, 21.4088 )
+
+[node name="Beans5" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.53117, 21.599 )
+
+[node name="Beans6" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.53117, 21.6767 )
+
+[node name="Beans7" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.09298, 21.073 )
+
+[node name="Beans8" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.09298, 21.1507 )
+
+[node name="Beans9" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.09298, 21.3311 )
+
+[node name="Beans10" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.09298, 21.4088 )
+
+[node name="Beans11" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 1.09298, 21.599 )
+
+[node name="Beans12" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 1.09298, 21.6767 )
+
+[node name="Beans13" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 0.588915, 21.073 )
+
+[node name="Beans14" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 0.588915, 21.1507 )
+
+[node name="Beans15" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 0.588915, 21.3311 )
+
+[node name="Beans16" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 0.588915, 21.4088 )
+
+[node name="Beans17" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7109, 0.588915, 21.599 )
+
+[node name="Beans18" parent="Grocery/Beans" instance=ExtResource( 58 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.95075, 0.588915, 21.6767 )
+
+[node name="Chrismas" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78908, 0, -0.672454 )
+visible = false
+
+[node name="Tree" parent="Chrismas" instance=ExtResource( 59 )]
+
+[node name="OmniLight" type="OmniLight" parent="Chrismas"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00421047, 0.8197, 0 )
+light_color = Color( 0.784314, 0.117647, 0.803922, 1 )
+light_energy = 3.055
+omni_range = 1.384

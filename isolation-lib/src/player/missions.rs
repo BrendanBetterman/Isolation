@@ -1,4 +1,4 @@
-use gdnative::prelude::Vector3;
+use gdnative::prelude::{Vector3, NodePath,Node};
 
 
 #[derive(Copy)]
