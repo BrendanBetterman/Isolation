@@ -1,4 +1,4 @@
-use gdnative::prelude::{Vector3, NodePath,Node};
+use gdnative::prelude::Vector3;
 
 
 #[derive(Copy)]
@@ -48,7 +48,7 @@ pub struct Missions{
     pub dialogue: i32,
     pub should_delete: bool,
     pub id_to_dlt: i32,
-    
+    pub expire: f32,
 }
 impl Missions{
     pub fn new()->Self{
@@ -60,25 +60,59 @@ impl Missions{
             dialogue: -1,
             should_delete: false,
             id_to_dlt: 1,
+            expire: 0.0,
         }
     }
-    
+    ///takes array and checks if everything was picked up.
+    fn is_collected(&mut self,ids:&[usize])->bool{
+        for i in ids{
+            if !self.has_picked(i.clone()){
+                return false;
+            }
+        }
+        return true;
+    }
+    ///Ends the mission and starts the next. TPs the player to home location.
+    fn end_mission(&mut self){
+        self.dialogue = -1;
+        self.location = Vector3::new(1.0,1.0,1.0);
+        self.should_tp = true;
+        self.quests[self.q_id].complete = true;
+        self.q_id += 1;
+    }
     ///Checks if item has been used
     fn check_toggle(&mut self,id:usize)->bool{
         let output =  self.quests[self.q_id].toggles[id];
         self.quests[self.q_id].toggles[id] = true;
         return !output;
     }
+    ///Takes id and returns if it has been picked up.
     fn has_picked(&mut self,id:usize)->bool{
         return self.quests[self.q_id].toggles[id];
     }
+    ///Hides the object of that id.
     fn delete_id(&mut self,id:i32){
         self.id_to_dlt = id;
         self.should_delete = true;
     }
+    ///Teleports the player to the specified location.
     fn teleport(&mut self,x:f32,y:f32,z:f32){
         self.location = Vector3::new(x,y,z);
         self.should_tp = true;
+    }
+    ///Display the dialogue and reset the counter
+    fn dialogue_trigger(&mut self, id:i32){
+        self.dialogue = id;
+        self.expire = 75.0;
+    }
+    ///Runs every tick and decreases the dialogue timer by delta.
+    pub fn update_dialogue(&mut self, delta:f64){
+        if self.expire - delta as f32 >0.0{
+            self.expire -= delta as f32 * 10.0;
+        }else{
+            self.dialogue = -1;
+        }
+
     }
     pub fn can_pickup(&mut self, item: &String)->bool{
         match self.q_id{
@@ -109,42 +143,38 @@ impl Missions{
             self.quests[self.q_id]._add_progress();
             self.location = Vector3::new(-28.0,0.0,4.0);
             self.should_tp = true;
-            self.dialogue = 1;
+            self.dialogue_trigger(1);
             
         }else if id == 2 && self.quests[self.q_id].progress == 1{
             //use car
             self.quests[self.q_id]._add_progress();
-            self.dialogue = 3;
+            self.dialogue_trigger(3);
         }else if id == 3 && self.quests[self.q_id].progress ==2{
             //pick up rock
             self.id_to_dlt = 0;
             self.should_delete = true;
-            self.dialogue = 5;
+            self.dialogue_trigger(5);
             self.quests[self.q_id]._add_progress();
         }else if id == 2 && self.quests[self.q_id].progress ==3{
             //use rock on window
-            self.dialogue = 6;
+            self.dialogue_trigger(6);
             self.quests[self.q_id]._add_progress();
             
         }else if id == 2 && self.quests[self.q_id].progress ==4{
-            self.dialogue = -1;
-            self.location = Vector3::new(1.0,1.0,1.0);
-            self.should_tp = true;
-            self.quests[self.q_id].complete = true;
-            self.q_id += 1;
+            self.end_mission();
         }
 
     }
     fn mission_one_look(&mut self,item: &String){
         let id = get_id(item);
         if id == 1 && !self.quests[self.q_id].toggles[0]{//keys
-            self.dialogue = 0;
+            self.dialogue_trigger(0);
             self.quests[self.q_id].toggles[0] = true;
         }else if id == 2  && !self.quests[self.q_id].toggles[1]{//car
-            self.dialogue = 2;
+            self.dialogue_trigger(2);
             self.quests[self.q_id].toggles[1] = true;
         }else if id == 3 && self.quests[self.q_id].progress >=2 && !self.quests[self.q_id].toggles[2]{//rock
-            self.dialogue = 4;
+            self.dialogue_trigger(4);
             self.quests[self.q_id].toggles[2] = true;
         }
     }
@@ -171,19 +201,19 @@ impl Missions{
     }
     fn m_look_2(&mut self,item:&String){
         match item.as_str(){
-            "Fridge"=> if !self.check_toggle(0) {self.dialogue = 8;},
-            "Mannequin"=> if !self.check_toggle(1) {self.dialogue = 10; },
+            "Fridge"=> if !self.check_toggle(0) {self.dialogue_trigger(8);},
+            "Mannequin"=> if !self.check_toggle(1) {self.dialogue_trigger(10); },
             _ => (),
         }
     }
     fn m_on_used_2(&mut self,item:&String){
         match item.as_str(){
-            "Fridge"=> if self.check_toggle(2) {self.dialogue = 9; self.teleport(-6.0,1.0,16.0)},
-            "Mannequin"=> if self.check_toggle(3) {self.dialogue = 11; },
-            "G_Door"=> if self.check_toggle(4) { self.dialogue = 12;},
-            "Bean"=> if self.check_toggle(5){self.dialogue = 1; self.delete_id(2)},
-            "CerealI"=> if self.check_toggle(6){self.dialogue = 1; self.delete_id(3)},
-            "Yams"=> if self.check_toggle(7){self.dialogue = 1; self.delete_id(4)},
+            "Fridge"=> if self.check_toggle(2) {self.dialogue_trigger(9); self.teleport(-6.0,1.0,16.0)},
+            "Mannequin"=> if self.check_toggle(3) {self.dialogue_trigger(11); },
+            "G_Door"=> if !self.is_collected(&[5 as usize,6 as usize,7 as usize]){self.dialogue_trigger(12)}else{self.end_mission()},
+            "Bean"=> if self.check_toggle(5){self.dialogue_trigger(13); self.delete_id(2)},
+            "CerealI"=> if self.check_toggle(6){self.dialogue_trigger(14); self.delete_id(3)},
+            "Yams"=> if self.check_toggle(7){self.dialogue_trigger(15); self.delete_id(4)},
             _ => (),
         }
     }

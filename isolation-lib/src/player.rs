@@ -1,5 +1,5 @@
 
-use gdnative::api::{RayCast, MeshInstance};
+use gdnative::api::RayCast;
 use gdnative::prelude::*;
 
 use self::missions::*;
@@ -165,11 +165,11 @@ impl Player {
                 input.warp_mouse_position(mouse);
             }else if mouse_x < -3.14{
                 mouse_x = mouse_x+6.279; 
-                let new_x = ((mouse_x)/self.sensitivity+0.5)*view.assume_unique().size().x;
+                let new_x = (mouse_x/self.sensitivity+0.5)*view.assume_unique().size().x;
                 let mouse = Vector2::new(new_x,view.assume_unique().get_mouse_position().y);//
                 input.warp_mouse_position(mouse);
             }
-            let mut mouse_y = (view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5);
+            let mut mouse_y = view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5;
             if mouse_y > 0.06{
                 mouse_y = 0.06;
             }else if mouse_y < -0.1{
@@ -288,7 +288,7 @@ impl Player {
             self.position = owner.translation();
             
             self.crouch(input);
-            
+            self.mission.update_dialogue(delta);
             self.quest_loop(input,owner);
             self.quest_can_pickup();
             owner.set_translation(self.position);//if quest requires a TP also handles crouch pos
