@@ -38,12 +38,17 @@ fn get_id(item: &String)->usize{
         _ => 0
     }
 }
+
+
 pub struct Missions{
     q_id: usize,
     quests: [Quest;2],
     pub should_tp: bool,
     pub location: Vector3,
     pub dialogue: i32,
+    pub should_delete: bool,
+    pub id_to_dlt: i32,
+    
 }
 impl Missions{
     pub fn new()->Self{
@@ -53,6 +58,8 @@ impl Missions{
             should_tp: false,
             location: Vector3::new(0.0,0.0,0.0),
             dialogue: -1,
+            should_delete: false,
+            id_to_dlt: 1,
         }
     }
     
@@ -61,6 +68,13 @@ impl Missions{
         let output =  self.quests[self.q_id].toggles[id];
         self.quests[self.q_id].toggles[id] = true;
         return !output;
+    }
+    fn has_picked(&mut self,id:usize)->bool{
+        return self.quests[self.q_id].toggles[id];
+    }
+    fn delete_id(&mut self,id:i32){
+        self.id_to_dlt = id;
+        self.should_delete = true;
     }
     fn teleport(&mut self,x:f32,y:f32,z:f32){
         self.location = Vector3::new(x,y,z);
@@ -103,6 +117,8 @@ impl Missions{
             self.dialogue = 3;
         }else if id == 3 && self.quests[self.q_id].progress ==2{
             //pick up rock
+            self.id_to_dlt = 0;
+            self.should_delete = true;
             self.dialogue = 5;
             self.quests[self.q_id]._add_progress();
         }else if id == 2 && self.quests[self.q_id].progress ==3{
@@ -147,6 +163,9 @@ impl Missions{
             "Fridge"=> self.quests[self.q_id].progress == 0,
             "Mannequin"=> self.quests[self.q_id].progress <=3,
             "G_Door"=> self.quests[self.q_id].progress <= 4,
+            "Bean"=> !self.has_picked(5),
+            "CerealI"=> !self.has_picked(6),
+            "Yams"=> !self.has_picked(7),
             _ => false,
         }
     }
@@ -162,7 +181,9 @@ impl Missions{
             "Fridge"=> if self.check_toggle(2) {self.dialogue = 9; self.teleport(-6.0,1.0,16.0)},
             "Mannequin"=> if self.check_toggle(3) {self.dialogue = 11; },
             "G_Door"=> if self.check_toggle(4) { self.dialogue = 12;},
-            
+            "Bean"=> if self.check_toggle(5){self.dialogue = 1; self.delete_id(2)},
+            "CerealI"=> if self.check_toggle(6){self.dialogue = 1; self.delete_id(3)},
+            "Yams"=> if self.check_toggle(7){self.dialogue = 1; self.delete_id(4)},
             _ => (),
         }
     }

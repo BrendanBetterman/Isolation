@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Models/Parking-Lot/Rock.fbx" type="PackedScene" id=1]
+[ext_resource path="res://Models/Parking-Lot/car.fbx" type="PackedScene" id=2]
+[ext_resource path="res://Models/Parking-Lot/snowlot.fbx" type="PackedScene" id=3]
+[ext_resource path="res://Models/Parking-Lot/skybox.fbx" type="PackedScene" id=4]
+[ext_resource path="res://Models/Parking-Lot/snow.fbx" type="PackedScene" id=5]
+[ext_resource path="res://Models/Parking-Lot/Lamp.fbx" type="PackedScene" id=6]
+
+[sub_resource type="BoxShape" id=18]
+extents = Vector3( 0.75322, 0.557657, 1.56955 )
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 0.17583, 0.104817, 0.247059 )
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 9.47128, 4.23093, 0.114713 )
+
+[node name="ParkingLot" type="Node"]
+
+[node name="Lamp" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.138844, 0, -0.143953, 0, 0.2, 0, 0.143953, 0, 0.138844, -25.853, 0.00381756, -2.95368 )
+
+[node name="OmniLight" type="OmniLight" parent="Lamp"]
+transform = Transform( 5, 0, 9.53674e-07, 0, 5, 0, -9.53674e-07, 0, 5, -0.0340805, 12.3847, 0.0353432 )
+light_color = Color( 0.898039, 0.756863, 0.329412, 1 )
+light_energy = 16.0
+
+[node name="SpotLight" type="SpotLight" parent="Lamp"]
+transform = Transform( 3.57476, 3.47956, 0.33729, -0.45549, -0.0147032, 4.97919, 3.46607, -3.59061, 0.306469, 11.1871, 23.066, 10.7901 )
+light_color = Color( 0.788235, 0.905882, 1, 1 )
+light_energy = 7.459
+spot_range = 39.244
+spot_angle = 63.17
+
+[node name="skybox" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5034, 0, 0 )
+
+[node name="snowlot" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5285, 0.0157492, 0 )
+
+[node name="snow" parent="snowlot" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4738, -0.0157492, -2.18273 )
+
+[node name="snow2" parent="snowlot/snow" instance=ExtResource( 5 )]
+transform = Transform( -0.0918839, 0, -0.99577, 0, 1, 0, 0.99577, 0, -0.0918839, -13.0086, -0.462911, 1.86904 )
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="CarTrigger" type="StaticBody" parent="Interactables"]
+transform = Transform( 0.694219, 0, -0.719764, 0, 1, 0, 0.719764, 0, 0.694219, -22.9913, -0.00636673, -3.36377 )
+
+[node name="CarCollision" type="CollisionShape" parent="Interactables/CarTrigger"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.593881, 0 )
+shape = SubResource( 18 )
+
+[node name="car2" parent="Interactables/CarTrigger" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
+
+[node name="Rock" type="StaticBody" parent="Interactables"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9014, 0.116697, -0.588148 )
+
+[node name="RockCollider" type="CollisionShape" parent="Interactables/Rock"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0.164732, 0 )
+shape = SubResource( 20 )
+
+[node name="Rock" parent="Interactables/Rock" instance=ExtResource( 1 )]
+
+[node name="Walls" type="StaticBody" parent="Interactables"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.991, 1.6171, -0.750448 )
+
+[node name="Wall" type="CollisionShape" parent="Interactables/Walls"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -2.10483, 0.206303, -8.68774 )
+shape = SubResource( 21 )
+
+[node name="Wall2" type="CollisionShape" parent="Interactables/Walls"]
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -2.10483, 0.206303, 10.7026 )
+shape = SubResource( 21 )
+
+[node name="Wall3" type="CollisionShape" parent="Interactables/Walls"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.4309, 0.206303, 0.871925 )
+shape = SubResource( 21 )
+
+[node name="Wall4" type="CollisionShape" parent="Interactables/Walls"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.32239, 0.206303, 0.871925 )
+shape = SubResource( 21 )

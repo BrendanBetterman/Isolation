@@ -124,6 +124,7 @@ impl Player {
             self.crouched = false;
         }
     }
+   
     fn quest_loop(&mut self,input:&Input,owner:&KinematicBody){
         self.mission.look(&self.item);
         
@@ -134,13 +135,15 @@ impl Player {
             self.mission.on_used(&self.item);
         }
         if self.mission.should_tp{
-            
             self.unhide_obj(owner, "../Hideables/Chrismas");
-            
             self.mission.should_tp = false;
-            self.position = self.mission.location;
-            
+            self.position = self.mission.location; 
         }
+        if self.mission.should_delete{
+            self.hide_obj(owner, self.mission.id_to_dlt);
+            self.mission.should_delete = false;
+        }
+        
     }
     fn quest_can_pickup(&mut self){
         self.pickupable = self.mission.can_pickup(&self.item);
@@ -154,25 +157,45 @@ impl Player {
                 None => panic!("Couldn't get viewport"),
             };  
             
-            let mut mouse_x = view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5;
-            let mut mouse_y = view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5;
-            //godot_print!("{:?}",view.assume_unique().get_mouse_position());
+            let mut mouse_x = (view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5)* self.sensitivity;
+            if mouse_x > 3.14{
+                mouse_x = mouse_x-6.279; 
+                let new_x = ((mouse_x)/self.sensitivity+0.5)*view.assume_unique().size().x;
+                let mouse = Vector2::new(new_x,view.assume_unique().get_mouse_position().y);//
+                input.warp_mouse_position(mouse);
+            }else if mouse_x < -3.14{
+                mouse_x = mouse_x+6.279; 
+                let new_x = ((mouse_x)/self.sensitivity+0.5)*view.assume_unique().size().x;
+                let mouse = Vector2::new(new_x,view.assume_unique().get_mouse_position().y);//
+                input.warp_mouse_position(mouse);
+            }
+            let mut mouse_y = (view.assume_unique().get_mouse_position().y/view.assume_unique().size().y-0.5);
             if mouse_y > 0.06{
                 mouse_y = 0.06;
             }else if mouse_y < -0.1{
                 mouse_y = -0.1;
             }
-            if mouse_x < -0.25{
-                let mouse = Vector2::new((mouse_x+1.0)*view.assume_unique().size().x,view.assume_unique().get_mouse_position().y);//
+
+            /*depercated 
+            //godot_print!("{:?}",view.assume_unique().get_mouse_position());
+            if mouse_x < -0.2499{
+                let mouse = Vector2::new((mouse_x+0.999)*view.assume_unique().size().x,view.assume_unique().get_mouse_position().y);//
                 input.warp_mouse_position(mouse);
                 mouse_x +=0.5;
-            }else if mouse_x > 0.25{
+            }else if mouse_x > 0.2499{
                 let mouse = Vector2::new((mouse_x)*view.assume_unique().size().x,view.assume_unique().get_mouse_position().y);
                 input.warp_mouse_position(mouse);
                 mouse_x -=0.5;
             }
-            
-            self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
+            if mouse_y > 0.06{
+                mouse_y = 0.06;
+            }else if mouse_y < -0.1{
+                mouse_y = -0.1;
+            }
+             */
+            self.rotation = Vector3::new(0.0,mouse_x,mouse_y* self.sensitivity);
+            godot_print!("{}",mouse_x);
+            //self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
         }
     }
     ///Needs owner to get the raycast grandchild object.
@@ -197,7 +220,27 @@ impl Player {
             self.item = item; 
         }
     }
-    
+    fn hide_obj(&self,owner:&KinematicBody,id:i32){
+        let name =match id {
+            0 => NodePath::from_str("../ParkingLot/Interactables/Rock"),
+            2 => NodePath::from_str("../Grocery/Bean"),
+            3 => NodePath::from_str("../Grocery/CerealI"),
+            4 => NodePath::from_str("../Grocery/Yams"),
+            _ => NodePath::from_str("../ParkingLot/Interactables/Rock"),
+        };
+        unsafe{
+            let tmp = Node::get_node(&owner,name);
+            let obj = match tmp{
+                Some(x)=>  x.assume_unique(),
+                None=> Node::new(),
+            };
+            
+            match obj.cast::<gdnative::api::Spatial>(){
+                Some(x) => x.hide(),
+                None => godot_error!("Fail"),
+            };
+        }
+    }
     fn unhide_obj(&self,owner:&KinematicBody,name:&str){
         unsafe{
             let tmp = Node::get_node(&owner,NodePath::from_str(name));

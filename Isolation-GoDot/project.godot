@@ -22,6 +22,7 @@ Hud="res://Hud.tscn"
 
 window/size/width=1280
 window/size/height=720
+window/size/resizable=false
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 
