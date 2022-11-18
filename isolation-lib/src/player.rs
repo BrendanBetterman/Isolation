@@ -194,7 +194,7 @@ impl Player {
             }
              */
             self.rotation = Vector3::new(0.0,mouse_x,mouse_y* self.sensitivity);
-            godot_print!("{}",mouse_x);
+            //godot_print!("{}",mouse_x);
             //self.rotation = Vector3::new(0.0,self.sensitivity * mouse_x,self.sensitivity * mouse_y);
         }
     }

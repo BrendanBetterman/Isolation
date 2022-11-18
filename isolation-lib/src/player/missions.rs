@@ -42,7 +42,7 @@ fn get_id(item: &String)->usize{
 
 pub struct Missions{
     q_id: usize,
-    quests: [Quest;2],
+    quests: [Quest;4],
     pub should_tp: bool,
     pub location: Vector3,
     pub dialogue: i32,
@@ -54,7 +54,7 @@ impl Missions{
     pub fn new()->Self{
         Missions {  
             q_id: 0,
-            quests: [Quest::new();2],
+            quests: [Quest::new();4],
             should_tp: false,
             location: Vector3::new(0.0,0.0,0.0),
             dialogue: -1,
@@ -118,6 +118,7 @@ impl Missions{
         match self.q_id{
             0 => self.mission_one_can_pickup(&item),
             1 => self.m_ci_2(&item),
+            2 => self.m_ci_3(&item),
             _ => false,
         }
     }
@@ -125,6 +126,7 @@ impl Missions{
         match self.q_id{
             0 => self.mission_one_on_used(&item),
             1 => self.m_on_used_2(&item),
+            2 => self.m_on_used_3(&item),
             _ => print!("no mission"),
         }
     }
@@ -132,6 +134,7 @@ impl Missions{
         match self.q_id{
             0 => self.mission_one_look(&item),
             1 => self.m_look_2(&item),
+            2 => self.m_look_3(&item),
             _ => print!("no mission"),
         }
     }
@@ -150,7 +153,7 @@ impl Missions{
             self.quests[self.q_id]._add_progress();
             self.dialogue_trigger(3);
         }else if id == 3 && self.quests[self.q_id].progress ==2{
-            //pick up rock
+            //pick up rock?
             self.id_to_dlt = 0;
             self.should_delete = true;
             self.dialogue_trigger(5);
@@ -218,6 +221,25 @@ impl Missions{
         }
     }
 
+    fn m_ci_3(&mut self,item:&String)->bool{
+        match item.as_str(){
+            "ChristmasTree"=> self.quests[self.q_id].progress <= 2,
+            _ => false,
+        }
+    }
+    fn m_look_3(&mut self,item:&String){
+        match item.as_str(){
+            "ChristmasTree"=> self.dialogue_trigger(4),
+            _ => (),
+        }
+    }
+    fn m_on_used_3(&mut self,item:&String){
+        match item.as_str(){
+            "ChristmasTree"=> if self.check_toggle(0) {self.dialogue_trigger(13); self.teleport(-27.0,1.0,30.0)},
+            
+            _ => (),
+        }
+    }
    
    
 }
