@@ -1,0 +1,11 @@
+"filename", "language", "Batch", "Properties", "Markdown", "Shell Script", "Rust", "ShaderLab", "comment", "blank", "total"
+"c:\Rust\Isolation\Isolation-GoDot\Shaders\cel.shader", "ShaderLab", 0, 0, 0, 0, 0, 66, 2, 18, 86
+"c:\Rust\Isolation\Isolation-GoDot\Shaders\outline.shader", "ShaderLab", 0, 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Rust\Isolation\Isolation-GoDot\export_presets.cfg", "Properties", 0, 91, 0, 0, 0, 0, 0, 12, 103
+"c:\Rust\Isolation\Modify.bat", "Batch", 1, 0, 0, 0, 0, 0, 0, 1, 2
+"c:\Rust\Isolation\README.md", "Markdown", 0, 0, 15, 0, 0, 0, 0, 6, 21
+"c:\Rust\Isolation\compile.bat", "Batch", 6, 0, 0, 0, 0, 0, 0, 0, 6
+"c:\Rust\Isolation\compile.sh", "Shell Script", 0, 0, 0, 4, 0, 0, 0, 0, 4
+"c:\Rust\Isolation\isolation-lib\src\player.rs", "Rust", 0, 0, 0, 0, 27, 0, 18, -2, 43
+"c:\Rust\Isolation\isolation-lib\src\player\missions.rs", "Rust", 0, 0, 0, 0, 64, 0, 7, 2, 73
+"Total", "-", 7, 91, 15, 4, 91, 78, 27, 40, 353

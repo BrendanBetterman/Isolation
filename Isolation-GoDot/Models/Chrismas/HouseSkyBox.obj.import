@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/HouseSkyBox.obj-2c511d7d6f6a08e967fc23c43c7c1324.mesh"
+
+[deps]
+
+files=[ "res://.import/HouseSkyBox.obj-2c511d7d6f6a08e967fc23c43c7c1324.mesh" ]
+
+source_file="res://Models/Chrismas/HouseSkyBox.obj"
+dest_files=[ "res://.import/HouseSkyBox.obj-2c511d7d6f6a08e967fc23c43c7c1324.mesh", "res://.import/HouseSkyBox.obj-2c511d7d6f6a08e967fc23c43c7c1324.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
