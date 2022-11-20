@@ -224,19 +224,21 @@ impl Missions{
     fn m_ci_3(&mut self,item:&String)->bool{
         match item.as_str(){
             "ChristmasTree"=> self.quests[self.q_id].progress <= 2,
+            "ChristmasDoor"=> true,
             _ => false,
         }
     }
     fn m_look_3(&mut self,item:&String){
         match item.as_str(){
-            "ChristmasTree"=> self.dialogue_trigger(4),
+            "ChristmasTree"=> self.dialogue_trigger(16),
+            "ChristmasDoor"=> if self.expire < 20.0{self.dialogue_trigger(18)},
             _ => (),
         }
     }
     fn m_on_used_3(&mut self,item:&String){
         match item.as_str(){
-            "ChristmasTree"=> if self.check_toggle(0) {self.dialogue_trigger(13); self.teleport(-27.0,1.0,30.0)},
-            
+            "ChristmasTree"=> if self.check_toggle(0) {self.dialogue_trigger(17); self.teleport(-27.0,1.0,30.0)},
+            "ChristmasDoor"=> {self.check_toggle(1); self.dialogue_trigger(19);},
             _ => (),
         }
     }

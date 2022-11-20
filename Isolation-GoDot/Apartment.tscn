@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -129,6 +129,9 @@ data = PoolVector3Array( 11.6416, 0, 10, 10, 0, 10, 11.6416, 0, 7.7127, 11.6416,
 
 [sub_resource type="BoxShape" id=28]
 extents = Vector3( 0.320751, 0.678149, 0.32981 )
+
+[sub_resource type="BoxShape" id=30]
+extents = Vector3( 0.278587, 0.684952, 0.549405 )
 
 [sub_resource type="ConcavePolygonShape" id=29]
 data = PoolVector3Array( 32.0045, -2.0373, -23.1501, 32.0045, 14.7703, -23.1501, 32.0045, -2.0373, 12.9118, 32.0045, -2.0373, 12.9118, 32.0045, 14.7703, -23.1501, 32.0045, 14.7703, 12.9118, 32.0045, -2.0373, 12.9118, 32.0045, 14.7703, 12.9118, -4.0575, -2.0373, 12.9118, -4.0575, -2.0373, 12.9118, 32.0045, 14.7703, 12.9118, -4.0575, 14.7703, 12.9118, -4.0575, -2.0373, 12.9118, -4.0575, 14.7703, 12.9118, -4.0575, -2.0373, -23.1501, -4.0575, -2.0373, -23.1501, -4.0575, 14.7703, 12.9118, -4.0575, 14.7703, -23.1501, -4.0575, -2.0373, -23.1501, -4.0575, 14.7703, -23.1501, 32.0045, -2.0373, -23.1501, 32.0045, -2.0373, -23.1501, -4.0575, 14.7703, -23.1501, 32.0045, 14.7703, -23.1501, -4.0575, 14.7703, 12.9118, 32.0045, 14.7703, 12.9118, -4.0575, 14.7703, -23.1501, -4.0575, 14.7703, -23.1501, 32.0045, 14.7703, 12.9118, 32.0045, 14.7703, -23.1501, 32.0045, -2.0373, 12.9118, -4.0575, -2.0373, 12.9118, 32.0045, -2.0373, -23.1501, 32.0045, -2.0373, -23.1501, -4.0575, -2.0373, 12.9118, -4.0575, -2.0373, -23.1501 )
@@ -1042,6 +1045,12 @@ transform = Transform( -0.0620938, 0, 0.99807, 0, 1, 0, -0.99807, 0, -0.0620938,
 
 [node name="Mannequin3" parent="House/house" instance=ExtResource( 57 )]
 transform = Transform( -0.999752, 0, -0.0222511, 0, 1, 0, 0.0222511, 0, -0.999752, 2.02521, 0, -7.03349 )
+
+[node name="ChristmasDoor" type="StaticBody" parent="House/house"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.871151, 0.763268, -2.76119 )
+
+[node name="CollisionShape" type="CollisionShape" parent="House/house/ChristmasDoor"]
+shape = SubResource( 30 )
 
 [node name="christmas2" parent="House" instance=ExtResource( 54 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -51.9401, 0, 37.6407 )

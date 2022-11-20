@@ -3,7 +3,7 @@ use gdnative::api::RayCast;
 use gdnative::prelude::*;
 
 use self::missions::*;
-mod missions;
+pub mod missions;
 /// The Player "class"
 #[derive(gdnative::derive::NativeClass)]
 #[inherit(KinematicBody)]
@@ -131,7 +131,7 @@ impl Player {
         self.dialogue = self.mission.dialogue;
             
         
-        if Input::is_action_pressed(input, "ui_use", false){
+        if Input::is_action_just_released(input, "ui_use", false){
             self.mission.on_used(&self.item);
         }
         if self.mission.should_tp{

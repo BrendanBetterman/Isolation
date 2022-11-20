@@ -21,13 +21,17 @@ godot_init!(init);
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
+*/
 #[cfg(test)]
 mod tests {
+
     use super::*;
 
     #[test]
     fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+        let mut mission = player::missions::Missions::new();
+        
+        assert_eq!(mission.can_pickup(&"CarKey".to_string()), true);
+        //assert_er!(mission.can_pickup(&"Fridge".to_string()), false);
     }
-}*/
+}
