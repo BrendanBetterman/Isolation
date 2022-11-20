@@ -27,7 +27,7 @@
 [ext_resource path="res://Models/Kitchen/CoffeeMaker.fbx" type="PackedScene" id=25]
 [ext_resource path="res://P_Camera.gdns" type="Script" id=26]
 [ext_resource path="res://Music/It's just a burning memory.mp3" type="AudioStream" id=27]
-[ext_resource path="res://Music/Cyberfuck 2069.mp3" type="AudioStream" id=28]
+[ext_resource path="res://menacingbetterbetter (1).wav" type="AudioStream" id=28]
 [ext_resource path="res://Models/Small/OutLet.fbx" type="PackedScene" id=29]
 [ext_resource path="res://Models/Small/FireAlarm.fbx" type="PackedScene" id=30]
 [ext_resource path="res://Models/Small/FireExt.fbx" type="PackedScene" id=31]
@@ -175,7 +175,7 @@ environment = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Room"]
 stream = ExtResource( 28 )
-volume_db = -25.0
+volume_db = -2.277
 pitch_scale = 0.56
 autoplay = true
 

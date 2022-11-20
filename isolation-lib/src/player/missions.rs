@@ -73,7 +73,7 @@ impl Missions{
         return true;
     }
     ///Ends the mission and starts the next. TPs the player to home location.
-    fn end_mission(&mut self){
+    pub fn end_mission(&mut self){
         self.dialogue = -1;
         self.location = Vector3::new(1.0,1.0,1.0);
         self.should_tp = true;

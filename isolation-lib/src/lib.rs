@@ -28,10 +28,37 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let mut mission = player::missions::Missions::new();
-        
+    fn mission_one_can_pickup() {
+        let mut mission = player::missions::Missions::new();  
         assert_eq!(mission.can_pickup(&"CarKey".to_string()), true);
-        //assert_er!(mission.can_pickup(&"Fridge".to_string()), false);
+        assert_eq!(mission.can_pickup(&"CarTrigger".to_string()),true);
+    }
+    #[test]
+    fn mission_one_cant_pickup(){
+        let mut mission = player::missions::Missions::new();  
+        assert_eq!(mission.can_pickup(&"Fridge".to_string()), false);
+        assert_eq!(mission.can_pickup(&"Mannequin".to_string()), false);
+    }
+    #[test]
+    fn mission_two_can_pickup() {
+        let mut mission = player::missions::Missions::new();  
+        mission.end_mission();
+        assert_eq!(mission.can_pickup(&"Fridge".to_string()), true);
+        assert_eq!(mission.can_pickup(&"Mannequin".to_string()),true);
+        assert_eq!(mission.can_pickup(&"G_Door".to_string()),true);
+        assert_eq!(mission.can_pickup(&"Bean".to_string()),true);
+        assert_eq!(mission.can_pickup(&"CerealI".to_string()),true);
+        assert_eq!(mission.can_pickup(&"Yams".to_string()),true);
+    }
+    #[test]
+    fn mission_two_cant_pickup() {
+        let mut mission = player::missions::Missions::new();  
+        mission.end_mission();
+        mission.on_used(&"Bean".to_string());
+        mission.on_used(&"Yams".to_string());
+        mission.on_used(&"CerealI".to_string());
+        assert_eq!(mission.can_pickup(&"Bean".to_string()),false);
+        assert_eq!(mission.can_pickup(&"CerealI".to_string()),false);
+        assert_eq!(mission.can_pickup(&"Yams".to_string()),false);
     }
 }
