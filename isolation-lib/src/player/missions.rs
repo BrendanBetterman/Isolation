@@ -53,7 +53,7 @@ pub struct Missions{
 impl Missions{
     pub fn new()->Self{
         Missions {  
-            q_id: 0,
+            q_id: 3,
             quests: [Quest::new();4],
             should_tp: false,
             location: Vector3::new(0.0,0.0,0.0),
@@ -119,6 +119,7 @@ impl Missions{
             0 => self.mission_one_can_pickup(&item),
             1 => self.m_ci_2(&item),
             2 => self.m_ci_3(&item),
+            3 => self.m_ci_4(&item),
             _ => false,
         }
     }
@@ -127,6 +128,7 @@ impl Missions{
             0 => self.mission_one_on_used(&item),
             1 => self.m_on_used_2(&item),
             2 => self.m_on_used_3(&item),
+            3 => self.m_on_used_4(&item),
             _ => print!("no mission"),
         }
     }
@@ -135,6 +137,7 @@ impl Missions{
             0 => self.mission_one_look(&item),
             1 => self.m_look_2(&item),
             2 => self.m_look_3(&item),
+            3 => self.m_look_4(&item),
             _ => print!("no mission"),
         }
     }
@@ -225,6 +228,7 @@ impl Missions{
         match item.as_str(){
             "ChristmasTree"=> self.quests[self.q_id].progress <= 2,
             "ChristmasDoor"=> true,
+            "Car"=> true,
             _ => false,
         }
     }
@@ -232,16 +236,41 @@ impl Missions{
         match item.as_str(){
             "ChristmasTree"=> self.dialogue_trigger(16),
             "ChristmasDoor"=> if self.expire < 20.0{self.dialogue_trigger(18)},
+            "Car" => if self.quests[self.q_id].toggles[1]{self.dialogue_trigger(21)}
             _ => (),
         }
     }
     fn m_on_used_3(&mut self,item:&String){
         match item.as_str(){
             "ChristmasTree"=> if self.check_toggle(0) {self.dialogue_trigger(17); self.teleport(-27.0,1.0,30.0)},
-            "ChristmasDoor"=> {self.check_toggle(1); self.dialogue_trigger(19);},
+            "ChristmasDoor"=> {self.check_toggle(1); self.dialogue_trigger(19); self.quests[self.q_id].toggles[0] = true},
+            "Car" => if !self.quests[self.q_id].toggles[1]{self.dialogue_trigger(20) }else{self.end_mission()}
             _ => (),
         }
     }
-   
+    fn m_ci_4(&mut self,item:&String)->bool{
+        match item.as_str(){
+            "TVHitBox"=> self.quests[self.q_id].progress <= 2,
+            "ChristmasDoor"=> true,
+            "Car"=> true,
+            _ => false,
+        }
+    }
+    fn m_look_4(&mut self,item:&String){
+        match item.as_str(){
+            "TVHitBox"=> self.dialogue_trigger(16),
+            "ChristmasDoor"=> if self.expire < 20.0{self.dialogue_trigger(18)},
+            "Car" => if self.quests[self.q_id].toggles[1]{self.dialogue_trigger(21)}
+            _ => (),
+        }
+    }
+    fn m_on_used_4(&mut self,item:&String){
+        match item.as_str(){
+            "TVHitBox"=> if self.check_toggle(0) {self.dialogue_trigger(17); self.teleport(6.0,1.0,-7.0)},
+            "ChristmasDoor"=> {self.check_toggle(1); self.dialogue_trigger(19); self.quests[self.q_id].toggles[0] = true},
+            "Car" => if !self.quests[self.q_id].toggles[1]{self.dialogue_trigger(20) }else{self.end_mission()}
+            _ => (),
+        }
+    }
    
 }
