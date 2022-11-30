@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://Models/Living-Room/Bed.fbx" type="PackedScene" id=1]
 [ext_resource path="res://Models/Living-Room/Fridge-Door.fbx" type="PackedScene" id=2]
@@ -64,7 +64,9 @@
 [ext_resource path="res://Models/Chrismas/table.fbx" type="PackedScene" id=62]
 [ext_resource path="res://Models/Parking-Lot/car.fbx" type="PackedScene" id=63]
 [ext_resource path="res://Models/Parking-Lot/Lamp.fbx" type="PackedScene" id=64]
-[ext_resource path="res://Videos/teapot.ogv" type="VideoStream" id=65]
+[ext_resource path="res://Videos/iso32.ogv" type="VideoStream" id=65]
+[ext_resource path="res://VideoPlayer.gdns" type="Script" id=66]
+[ext_resource path="res://AudioStreamPlayer.gdns" type="Script" id=67]
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 2.29675, 5.70698, 2.24548 )
@@ -182,9 +184,10 @@ shadow_enabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Room"]
 stream = ExtResource( 28 )
-volume_db = -2.277
+volume_db = 2.734
 pitch_scale = 0.56
 autoplay = true
+script = ExtResource( 67 )
 
 [node name="Small" type="Node" parent="Room"]
 
@@ -1212,7 +1215,7 @@ unit_db = -32.415
 max_distance = 10.0
 
 [node name="Sprite3D" type="Sprite3D" parent="Alternate Room/Living Room/TV-Stand/TV"]
-transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.522831, 0.311152, 0 )
+transform = Transform( -3.0598e-09, 0, 0.1, 0, 0.07, 0, -0.07, 0, -4.37114e-09, 0.0227976, 0.311152, 0 )
 flip_v = true
 texture = SubResource( 33 )
 region_rect = Rect2( 0, 0, 2.003, 2 )
@@ -1221,10 +1224,11 @@ region_rect = Rect2( 0, 0, 2.003, 2 )
 size = Vector2( 1280, 720 )
 
 [node name="VideoPlayer" type="VideoPlayer" parent="Alternate Room/Living Room/TV-Stand/TV/Sprite3D/Viewport"]
-margin_right = 407.0
-margin_bottom = 407.0
+margin_right = 1280.0
+margin_bottom = 720.0
 stream = ExtResource( 65 )
 autoplay = true
+script = ExtResource( 66 )
 
 [node name="NES" parent="Alternate Room/Living Room/TV-Stand" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127813, 0.192176, 0.0785999 )

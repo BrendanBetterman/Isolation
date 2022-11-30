@@ -3,7 +3,9 @@ mod helloworld;
 mod player;
 mod camera;
 mod shadow;
+mod video;
 mod hud;
+mod audio;
 // Function that registers all exposed classes to Godot
 fn init(handle: InitHandle) {
     handle.add_class::<helloworld::HelloWorld>();
@@ -13,6 +15,8 @@ fn init(handle: InitHandle) {
     handle.add_class::<hud::use_obj::Use>();
     handle.add_class::<hud::dialogue::Dialogue>();
     handle.add_class::<hud::dialogue_box::DialogueBox>();
+    handle.add_class::<video::Video>();
+    handle.add_class::<audio::Audio>();
 }
 // Macro that creates the entry-points of the dynamic library.
 godot_init!(init);

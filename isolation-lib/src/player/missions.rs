@@ -53,7 +53,7 @@ pub struct Missions{
 impl Missions{
     pub fn new()->Self{
         Missions {  
-            q_id: 3,
+            q_id: 0,
             quests: [Quest::new();4],
             should_tp: false,
             location: Vector3::new(0.0,0.0,0.0),
@@ -251,24 +251,21 @@ impl Missions{
     fn m_ci_4(&mut self,item:&String)->bool{
         match item.as_str(){
             "TVHitBox"=> self.quests[self.q_id].progress <= 2,
-            "ChristmasDoor"=> true,
-            "Car"=> true,
+            
             _ => false,
         }
     }
     fn m_look_4(&mut self,item:&String){
         match item.as_str(){
-            "TVHitBox"=> self.dialogue_trigger(16),
-            "ChristmasDoor"=> if self.expire < 20.0{self.dialogue_trigger(18)},
-            "Car" => if self.quests[self.q_id].toggles[1]{self.dialogue_trigger(21)}
+            "TVHitBox"=> if self.check_toggle(0) {self.dialogue_trigger(22)},
+            
             _ => (),
         }
     }
     fn m_on_used_4(&mut self,item:&String){
         match item.as_str(){
-            "TVHitBox"=> if self.check_toggle(0) {self.dialogue_trigger(17); self.teleport(6.0,1.0,-7.0)},
-            "ChristmasDoor"=> {self.check_toggle(1); self.dialogue_trigger(19); self.quests[self.q_id].toggles[0] = true},
-            "Car" => if !self.quests[self.q_id].toggles[1]{self.dialogue_trigger(20) }else{self.end_mission()}
+            "TVHitBox"=> if self.check_toggle(1) {self.dialogue_trigger(24); self.teleport(6.0,1.0,-7.0);}else{self.dialogue_trigger(23);},
+            
             _ => (),
         }
     }
