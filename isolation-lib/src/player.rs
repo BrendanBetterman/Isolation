@@ -158,12 +158,12 @@ impl Player {
             };  
             
             let mut mouse_x = (view.assume_unique().get_mouse_position().x/view.assume_unique().size().x-0.5)* self.sensitivity;
-            if mouse_x > 3.14{
+            if mouse_x > 4.14{//3.14
                 mouse_x = mouse_x-6.279; 
                 let new_x = ((mouse_x)/self.sensitivity+0.5)*view.assume_unique().size().x;
                 let mouse = Vector2::new(new_x,view.assume_unique().get_mouse_position().y);//
                 input.warp_mouse_position(mouse);
-            }else if mouse_x < -3.14{
+            }else if mouse_x < -4.14{//-3.14
                 mouse_x = mouse_x+6.279; 
                 let new_x = (mouse_x/self.sensitivity+0.5)*view.assume_unique().size().x;
                 let mouse = Vector2::new(new_x,view.assume_unique().get_mouse_position().y);//
